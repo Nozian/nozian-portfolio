@@ -171,6 +171,35 @@ section.alt { background: var(--bg-alt); }
 .tool.open .tool-expand .plus { transform: rotate(45deg); }
 .tool-expand .plus { display: inline-block; transition: transform 0.25s; }
 
+/* ============ Live demo widget ============ */
+.tool-demo {
+  margin: 4px 0 14px; padding: 14px; background: var(--bg-alt); border-radius: var(--radius-md);
+}
+.demo-label {
+  display: block; font-size: 11px; font-weight: 700; color: var(--ink);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;
+}
+.demo-row { display: flex; gap: 8px; }
+.demo-input {
+  flex: 1; min-width: 0; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px;
+  font-size: 13px; font-family: inherit; background: #fff; color: var(--ink);
+}
+.demo-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.demo-btn {
+  padding: 8px 16px; border: none; border-radius: 8px; background: var(--accent);
+  color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+.demo-btn:hover { background: #0055aa; }
+.demo-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.demo-link {
+  font-size: 11px; padding: 4px 10px; border-radius: 100px; background: #fff;
+  border: 1px solid var(--line); color: var(--ink); text-decoration: none;
+}
+.demo-link:hover { background: var(--bg-alt); }
+.demo-link.demo-library { background: var(--accent-dim); border-color: #a9cdf5; color: var(--accent); font-weight: 700; }
+.demo-hint { font-size: 10.5px; color: var(--sub-faint); margin-top: 4px; }
+.demo-note { font-size: 10.5px; color: var(--sub-faint); margin-top: 8px; line-height: 1.5; }
+
 /* ============ Pattern ============ */
 .pattern-grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
@@ -512,6 +541,7 @@ const TOOLS = [
     tech: ["Manifest V3", "Calil API", "Shadow DOM", "MutationObserver"],
     color: "2F9E44",
     repo: "calil-wishlist-checker",
+    demo: true,
     motiveJa: "Book Search+で本の横断検索はできるようになったけど、「結局どこで借りられるか」は毎回自分で確認してた。複数登録した図書館のうち、どこで借りられるかまでその場でわかるようにした。"
   }
 ];
@@ -533,8 +563,8 @@ const BRAND = {
     {
       jaTitle: "プラットフォームに、主導権を渡さない",
       enTitle: "Don't cede control to platforms",
-      jaBody: "Yodobashi Modernは一強への対抗、Timeline Viewerはデータ主権の回復。プラットフォームの都合で決まるUIや仕様を、利用者の側から作り変える。小さなコードやけど、思想としては一貫している。",
-      enBody: "Yodobashi Modern resists a monopoly; Timeline Viewer reclaims data sovereignty. I rebuild platform-dictated UIs and specs from the user's side. Small code, but a consistent philosophy."
+      jaBody: "Yodobashi Modernは一強への対抗、Timeline Viewerは自分のデータを自分の手元に置いておく実践。プラットフォームの都合で決まるUIや仕様を、利用者の側から作り変える。小さなコードやけど、思想としては一貫している。",
+      enBody: "Yodobashi Modern resists a monopoly; Timeline Viewer keeps personal data in the user's own hands. I rebuild platform-dictated UIs and specs from the user's side. Small code, but a consistent philosophy."
     }
   ]
 };
@@ -568,6 +598,35 @@ BRAND.philosophy.forEach((p, i) => {
   mg.appendChild(d);
 });
 
+// 図書館デモ用: タイトルからクイックリンクを組み立てる(実際の拡張機能と同じ発想)
+function buildDemoLinks(title) {
+  const q = encodeURIComponent(title);
+  return [
+    { label: "図書館 (カーリル)", url: `https://calil.jp/openurl?rft.btitle=${q}`, cls: "demo-library" },
+    { label: "紀伊國屋", url: `https://www.google.com/search?q=site:kinokuniya.co.jp+${q}` },
+    { label: "honto", url: `https://www.google.com/search?q=site:honto.jp+${q}` },
+    { label: "楽天ブックス", url: `https://search.rakuten.co.jp/search/mall/${q}/` },
+    { label: "ブックオフ", url: `https://www.google.com/search?q=site:shopping.bookoff.co.jp+${q}` },
+    { label: "メルカリ", url: `https://jp.mercari.com/search?keyword=${q}` },
+  ];
+}
+
+function buildDemoHtml() {
+  return `
+    <div class="tool-demo" data-demo="1">
+      <label class="demo-label"><span class="ja">試してみる — 本のタイトルを入力</span><span class="en block">Try it — enter a book title</span></label>
+      <div class="demo-row">
+        <input type="text" class="demo-input" placeholder="例: 世界史 深読み">
+        <button class="demo-btn" type="button"><span class="ja">検索</span><span class="en inline">Search</span></button>
+      </div>
+      <div class="demo-links"></div>
+      <p class="demo-note">
+        <span class="ja">※ このデモは実際の拡張機能と同じ横断検索リンクを開くだけの簡易版。登録図書館ごとの貸出判定にはAPIキー登録とAmazon連携(拡張機能本体)が必要。</span>
+        <span class="en block">This demo just opens the same cross-search links as the real extension. Per-library availability requires an API key and the actual Amazon extension.</span>
+      </p>
+    </div>`;
+}
+
 // Tools
 const tl = document.getElementById('tools-list');
 TOOLS.forEach(t => {
@@ -583,12 +642,42 @@ TOOLS.forEach(t => {
     <div class="tool-desc"><span class="ja">${t.descJa}</span><span class="en block">${t.descEn}</span></div>
     <div class="tool-tech">${tech}</div>
     <ul class="tool-feats">${feats}</ul>
+    ${t.demo ? buildDemoHtml() : ''}
     <div class="tool-motive"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       ${t.motiveJa}
     </div></div>
     <div class="tool-expand"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus">+</span></div>`;
   row.addEventListener('click', () => row.classList.toggle('open'));
+
+  if (t.demo) {
+    const demoEl = row.querySelector('.tool-demo');
+    const input = demoEl.querySelector('.demo-input');
+    const btn = demoEl.querySelector('.demo-btn');
+    const linksBox = demoEl.querySelector('.demo-links');
+
+    // デモ操作中はカードの開閉トグルが暴発せんように、ここだけ伝播を止める
+    demoEl.addEventListener('click', (e) => e.stopPropagation());
+
+    const runDemo = () => {
+      const title = input.value.trim();
+      if (!title) { input.focus(); return; }
+      linksBox.innerHTML = '';
+      buildDemoLinks(title).forEach((l) => {
+        const a = document.createElement('a');
+        a.href = l.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'demo-link' + (l.cls ? ' ' + l.cls : '');
+        a.textContent = l.label;
+        linksBox.appendChild(a);
+      });
+    };
+
+    btn.addEventListener('click', runDemo);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') runDemo(); });
+  }
+
   tl.appendChild(row);
 });
 
