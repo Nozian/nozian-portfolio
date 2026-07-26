@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nozian — Rebuilding the Internet for Myself</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #ffffff;
+  --bg-alt: #f5f5f7;
+  --ink: #1d1d1f;
+  --sub: #6e6e73;
+  --sub-faint: #a1a1a6;
+  --line: #d2d2d7;
+  --accent: #0066cc;
+  --accent-dim: #e8f1fc;
+  --card: #ffffff;
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --shadow: 0 1px 2px rgba(0,0,0,0.03), 0 10px 30px rgba(0,0,0,0.06);
+  --shadow-hover: 0 4px 10px rgba(0,0,0,0.05), 0 20px 44px rgba(0,0,0,0.09);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--accent); color: #fff; }
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+.wrap-narrow { max-width: 780px; margin: 0 auto; padding: 0 28px; }
+
+/* ============ Nav ============ */
+nav.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 52px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255,255,255,0.72); border-bottom: 1px solid rgba(210,210,215,0.6);
+}
+nav.topnav .wordmark { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+.lang-bar { display: flex; gap: 2px; background: var(--bg-alt); border-radius: 100px; padding: 3px; }
+.lang-bar button {
+  border: none; background: none; cursor: pointer;
+  font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600;
+  padding: 5px 14px; border-radius: 100px; color: var(--sub); transition: all 0.2s;
+}
+.lang-bar button.on { background: var(--ink); color: #fff; }
+
+.en { display: none; }
+body.lang-en .ja { display: none; }
+body.lang-en .en { display: revert; }
+body.lang-en .en.block { display: block; }
+body.lang-en .en.inline { display: inline; }
+
+/* ============ Hero ============ */
+header.hero {
+  min-height: 92vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 120px 24px 80px;
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  background: var(--accent-dim); padding: 6px 16px; border-radius: 100px;
+  margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: 'Inter', 'Noto Sans JP', sans-serif; font-weight: 800;
+  font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.25;
+  letter-spacing: -0.03em; max-width: 16ch; margin: 0 auto 22px;
+}
+.hero h1 .accent { color: var(--accent); }
+.hero .sub-title {
+  font-size: clamp(1.05rem, 2vw, 1.3rem); color: var(--sub); font-weight: 400;
+  max-width: 46ch; margin: 0 auto 40px; line-height: 1.6;
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  font-size: 13.5px; color: var(--sub);
+}
+.hero-meta span.pill {
+  background: var(--bg-alt); border: 1px solid var(--line);
+  padding: 6px 14px; border-radius: 100px;
+}
+.hero-meta b { color: var(--ink); font-weight: 700; }
+
+/* ============ Section frame ============ */
+section { padding: 108px 0; }
+section.alt { background: var(--bg-alt); }
+.sec-head { max-width: 640px; margin: 0 auto 56px; text-align: center; }
+.sec-eyebrow {
+  font-size: 13px; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;
+}
+.sec-head h2 {
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem); font-weight: 800;
+  letter-spacing: -0.02em; margin-bottom: 14px; line-height: 1.3;
+}
+.sec-head p { color: var(--sub); font-size: 1.05rem; line-height: 1.6; }
+
+/* ============ Manifesto ============ */
+.manifesto-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+}
+.mani {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 32px 28px;
+}
+.mani .idx {
+  font-size: 13px; font-weight: 700; color: var(--sub-faint); margin-bottom: 18px;
+}
+.mani h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.01em; }
+.mani p { color: var(--sub); font-size: 0.95rem; line-height: 1.7; }
+
+/* ============ Tools grid ============ */
+.tools-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
+}
+.tool {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 28px 26px; cursor: pointer; transition: box-shadow 0.25s, transform 0.25s;
+  display: flex; flex-direction: column;
+}
+.tool:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+.tool-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.tool-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--tool-color); flex-shrink: 0; }
+.tool-num { font-size: 12.5px; font-weight: 700; color: var(--sub-faint); }
+.tool-name { font-size: 1.08rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
+.tool-tagline { font-size: 0.95rem; color: var(--tool-color); font-weight: 600; margin-bottom: 12px; }
+.tool-desc { color: var(--sub); font-size: 0.92rem; line-height: 1.65; margin-bottom: 16px; }
+.tool-tech { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.tool-tech span {
+  font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--sub);
+  background: var(--bg-alt); border-radius: 6px; padding: 3px 8px;
+}
+.tool-feats { list-style: none; margin-bottom: 4px; }
+.tool-feats li {
+  font-size: 0.86rem; color: var(--sub); padding-left: 16px; position: relative; margin-bottom: 5px;
+}
+.tool-feats li::before {
+  content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--tool-color);
+}
+.tool-motive {
+  max-height: 0; overflow: hidden; transition: max-height 0.35s ease;
+}
+.tool.open .tool-motive { max-height: 260px; }
+.tool-motive-inner {
+  margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line);
+  font-size: 0.88rem; color: var(--sub); line-height: 1.7;
+}
+.tool-motive-inner .label {
+  display: block; font-size: 11.5px; font-weight: 700; color: var(--ink);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+}
+.tool-expand {
+  margin-top: auto; padding-top: 14px; font-size: 12.5px; font-weight: 600; color: var(--accent);
+  display: flex; align-items: center; gap: 4px;
+}
+.tool.open .tool-expand .plus { transform: rotate(45deg); }
+.tool-expand .plus { display: inline-block; transition: transform 0.25s; }
+
+/* ============ Live demo widget ============ */
+.tool-demo {
+  margin: 4px 0 14px; padding: 14px; background: var(--bg-alt); border-radius: var(--radius-md);
+}
+.demo-label {
+  display: block; font-size: 11px; font-weight: 700; color: var(--ink);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;
+}
+.demo-row { display: flex; gap: 8px; }
+.demo-input {
+  flex: 1; min-width: 0; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px;
+  font-size: 13px; font-family: inherit; background: #fff; color: var(--ink);
+}
+.demo-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.demo-btn {
+  padding: 8px 16px; border: none; border-radius: 8px; background: var(--accent);
+  color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+.demo-btn:hover { background: #0055aa; }
+.demo-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.demo-link {
+  font-size: 11px; padding: 4px 10px; border-radius: 100px; background: #fff;
+  border: 1px solid var(--line); color: var(--ink); text-decoration: none;
+}
+.demo-link:hover { background: var(--bg-alt); }
+.demo-link.demo-library { background: var(--accent-dim); border-color: #a9cdf5; color: var(--accent); font-weight: 700; }
+.demo-hint { font-size: 10.5px; color: var(--sub-faint); margin-top: 4px; }
+.demo-note { font-size: 10.5px; color: var(--sub-faint); margin-top: 8px; line-height: 1.5; }
+
+/* ============ Pattern ============ */
+.pattern-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+}
+.pat-item {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md);
+  padding: 22px 20px;
+}
+.pat-n {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%; background: var(--accent-dim);
+  color: var(--accent); font-size: 12.5px; font-weight: 700; margin-bottom: 14px;
+}
+.pat-item p { font-size: 0.9rem; color: var(--sub); line-height: 1.6; }
+
+/* ============ Stats ============ */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+.stat .n {
+  font-size: clamp(2.6rem, 5vw, 3.6rem); font-weight: 800; letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.stat .l { color: var(--sub); font-size: 0.92rem; margin-top: 6px; }
+
+/* ============ Closing ============ */
+.closing { text-align: center; padding: 130px 0; }
+.closing .q {
+  font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em;
+  line-height: 1.45; max-width: 18ch; margin: 0 auto 24px;
+}
+.closing .sig { color: var(--sub); font-size: 0.95rem; }
+
+footer {
+  text-align: center; padding: 40px 24px; color: var(--sub-faint); font-size: 12.5px;
+  border-top: 1px solid var(--line);
+}
+
+/* ============ Reveal ============ */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  .manifesto-grid { grid-template-columns: 1fr; }
+  .pattern-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .pattern-grid { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  section { padding: 76px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body class="lang-ja">
+
+<nav class="topnav">
+  <div class="wordmark">Nozian</div>
+  <div class="lang-bar">
+    <button id="btn-ja" class="on" onclick="setLang('ja')">日本語</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Nozian — Independent thinking from rural Japan</div>
+    <h1>
+      <span class="ja">インターネットを<span class="accent">、自分のために</span>作り直す。</span>
+      <span class="en block">Rebuilding the internet<span class="accent">, for myself.</span></span>
+    </h1>
+    <p class="sub-title">
+      <span class="ja">群馬の図書館を拠点に、ひとりで設計・開発した12本のツール。不便を感じたら、自分で作り直す。</span>
+      <span class="en block">Twelve tools designed and built solo, from a public library in rural Gunma. When something's inconvenient, I rebuild it myself.</span>
+    </p>
+    <div class="hero-meta">
+      <span class="pill"><b>12</b> <span class="ja">本のツール</span><span class="en inline">tools</span></span>
+      <span class="pill"><b>2026</b></span>
+      <span class="pill"><span class="ja">設計 · 開発 · 公開</span><span class="en inline">Design · Build · Ship</span></span>
+    </div>
+  </div>
+</header>
+
+<section id="manifesto">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="ja">姿勢</span><span class="en inline">Stance</span></div>
+      <h2><span class="ja">道具に文句を言う代わりに、作る。</span><span class="en block">Instead of complaining about tools, I build them.</span></h2>
+      <p><span class="ja">趣味の小品ではなく、ひとつの一貫した思想の実装。</span><span class="en block">These aren't hobby projects — they're one consistent philosophy, implemented.</span></p>
+    </div>
+    <div class="manifesto-grid reveal" id="manifesto-grid"></div>
+  </div>
+</section>
+
+<section id="tools" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="ja">作ったもの</span><span class="en inline">The work</span></div>
+      <h2><span class="ja">12本のツール</span><span class="en block">Twelve tools</span></h2>
+      <p><span class="ja">カードをタップすると、それを作った動機が開く。</span><span class="en block">Tap any card to see why it was built.</span></p>
+    </div>
+    <div class="tools-grid" id="tools-list"></div>
+  </div>
+</section>
+
+<section id="pattern">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="ja">共通点</span><span class="en inline">The thread</span></div>
+      <h2 id="pat-title"></h2>
+      <p><span class="ja">12本はバラバラに見えて、設計思想は一本につながっている。</span><span class="en block">Twelve tools that look scattered, held together by one design philosophy.</span></p>
+    </div>
+    <div class="pattern-grid reveal" id="pattern-wrap"></div>
+  </div>
+</section>
+
+<section id="stats" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="ja">記録</span><span class="en inline">By the numbers</span></div>
+      <h2><span class="ja">数字で見るNozian</span><span class="en block">Nozian, counted</span></h2>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><div class="n">12</div><div class="l"><span class="ja">設計・開発したツール</span><span class="en block">tools designed &amp; built</span></div></div>
+      <div class="stat"><div class="n">10</div><div class="l"><span class="ja">Chrome拡張機能</span><span class="en block">Chrome extensions</span></div></div>
+      <div class="stat"><div class="n">2</div><div class="l"><span class="ja">独立Webアプリ</span><span class="en block">standalone web apps</span></div></div>
+      <div class="stat"><div class="n">1</div><div class="l"><span class="ja">貫かれた思想</span><span class="en block">consistent philosophy</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap-narrow">
+    <p class="q reveal">
+      <span class="ja">悪い道具に文句を言うな。良い道具を作れ。</span>
+      <span class="en block">Don't complain about bad tools. Build better ones.</span>
+    </p>
+    <div class="sig reveal">— Nozian, 2026</div>
+  </div>
+</section>
+
+<footer>Nozian · Independent thinking from rural Japan · Gunma, Japan</footer>
+
+<script>
+// ============================================================
+// Nozian Portfolio — Master Tool Data (canonical source)
+// ============================================================
+
+const TOOLS = [
+  {
+    num: "01",
+    name: "Streaming Watchlist Organizer",
+    nameJa: "ストリーミング・ウォッチリスト整理",
+    short: "SWO",
+    taglineJa: "積み動画を、ひとつの一覧に。",
+    taglineEn: "One list for everything you want to watch.",
+    descJa: "Prime Video・Netflix・U-NEXTのウォッチリストを1つの拡張機能でジャンル別に整理。TMDb連携でジャンル自動分類、CSV書き出し、外部サイト連携まで対応。",
+    descEn: "Unifies the watchlists of Prime Video, Netflix, and U-NEXT into a single extension, with automatic genre classification via TMDb, CSV export, and external-site linking.",
+    features: ["3サービス横断 (Prime/Netflix/U-NEXT)", "TMDb連携でジャンル自動分類", "CSV書き出し", "前回データの即時表示 (永続化)"],
+    featuresEn: ["Cross-service (Prime/Netflix/U-NEXT)", "Auto genre tagging via TMDb", "CSV export", "Instant reload (persistence)"],
+    tech: ["Manifest V3", "TMDb API", "MutationObserver", "CSV export"],
+    color: "E0506E",
+    repo: "streaming-watchlist-organizer",
+    motiveJa: "サブスクが増えるほど「どこで何を観たかったか」が分散していく。サービス側は横断を助けてくれへんから、自分で横断レイヤーを作った。"
+  },
+  {
+    num: "02",
+    name: "Amazon Wishlist Organizer",
+    nameJa: "Amazon ほしい物リスト整理",
+    short: "Wishlist Hub",
+    taglineJa: "ほしい物リストを、判断できる画面に。",
+    taglineEn: "Turn your wishlist into a screen you can actually scan.",
+    descJa: "Amazonのほしい物リストをコンパクトなグリッド表示に変換。一行により多くのアイテムを並べ、画像・タイトル・価格だけのクリーンな一覧にする。列数は3〜10列で調整可能。",
+    descEn: "Converts the Amazon wishlist into a compact grid view, packing more items per row and leaving a clean list of image, title, and price. Column count adjustable from 3 to 10.",
+    features: ["グリッド表示変換", "列数調整 (3〜10列)", "余計な要素を非表示", "カーリル図書館リンク構想"],
+    featuresEn: ["Grid view conversion", "Adjustable columns (3–10)", "Clutter removal", "Calil library link concept"],
+    tech: ["Manifest V3", "Content Script", "CSS Override", "MutationObserver"],
+    color: "F0A500",
+    repo: "amazon-wishlist-organizer",
+    motiveJa: "ほしい物リストは縦に伸びるだけで、全体を見て「結局どれを買うか」を判断しづらい。一覧性を取り戻せば、買い物メモが意思決定ツールになる。"
+  },
+  {
+    num: "03",
+    name: "Google Cleaner",
+    nameJa: "Google クリーナー",
+    short: "Cleaner",
+    taglineJa: "検索結果を、検索結果だけに。",
+    taglineEn: "Search results, and nothing else.",
+    descJa: "Google検索から「AI要約」「他の人はこちらも検索」「関連する質問」などのノイズを除去。設定パネルを検索結果ページに直接埋め込み、機能ごとにオン/オフできる。",
+    descEn: "Removes noise from Google Search — AI Overview, 'People Also Search For', 'People Also Ask' and more. A settings panel injected into the results page lets you toggle each feature on or off.",
+    features: ["AI要約・広告を除去", "機能ごとにトグル切替", "検索演算子チートシート内蔵", "設定の永続化"],
+    featuresEn: ["Remove AI overview & ads", "Per-feature toggles", "Built-in operator cheat sheet", "Persisted settings"],
+    tech: ["Manifest V3", "Content Script", "localStorage", "Embedded sidebar"],
+    color: "34A853",
+    repo: "google-cleaner",
+    motiveJa: "検索は情報への入口やのに、その入口がノイズで埋まっていく。フィルターバブルを研究してきた身として、検索結果を「結果だけ」に戻すのは思想の実装でもある。"
+  },
+  {
+    num: "04",
+    name: "Book Search+ / Amazon Multi Search Helper",
+    nameJa: "本の横断検索ヘルパー",
+    short: "Book Search+",
+    taglineJa: "Amazonを、本の発見装置にする。",
+    taglineEn: "Turn Amazon into a discovery engine for books.",
+    descJa: "Amazonの商品ページから、図書館・書店・中古市場を横断検索。紀伊國屋・honto・ブックオフ・メルカリ・楽天、そしてカーリルによる図書館蔵書検索まで一括で開ける。",
+    descEn: "From any Amazon product page, search across libraries, bookstores, and used-book markets at once — Kinokuniya, honto, BookOff, Mercari, Rakuten, and Calil library catalogs.",
+    features: ["図書館検索 (カーリル)", "書店横断 (紀伊國屋/honto)", "中古市場 (ブックオフ/メルカリ)", "読書の選択肢を拡張"],
+    featuresEn: ["Library search (Calil)", "Bookstore search (Kinokuniya/honto)", "Used markets (BookOff/Mercari)", "Expand reading options"],
+    tech: ["Manifest V3", "Content Script", "URL query builder", "Multi-site routing"],
+    color: "A371F7",
+    repo: "amazon-multi-search-helper",
+    motiveJa: "本は買う以外にも、借りる・古本で買う・読み比べるという選択肢がある。Amazonを「発見の起点」にすれば、読書の自由度が一気に広がる。"
+  },
+  {
+    num: "05",
+    name: "AI Navigator / AI Search Assistant",
+    nameJa: "AI 横断検索アシスタント",
+    short: "AI Navigator",
+    taglineJa: "1つの質問を、複数のAIへ同時に。",
+    taglineEn: "One question, sent to every AI at once.",
+    descJa: "1つの質問をChatGPT・Claude・Gemini・Perplexity、さらにGoogle・Bing・DuckDuckGoへ並列で投げる横断検索ランチャー。回答を比較することで、特定モデルの偏りに引っ張られず情報を得る。",
+    descEn: "A cross-search launcher that fires one question at ChatGPT, Claude, Gemini, Perplexity, plus Google, Bing, and DuckDuckGo in parallel. Comparing answers guards against the bias of any single AI.",
+    features: ["7サービス横断検索", "並列ワンクリック起動", "回答の比較で偏り検出", "AI診断コンテンツへ発展"],
+    featuresEn: ["7-service cross search", "Parallel one-click launch", "Bias detection via comparison", "Grew into AI diagnostic quiz"],
+    tech: ["Manifest V3", "URL query builder", "Multi-tab launch", "Chart.js (diagnostic)"],
+    color: "5B8DEF",
+    repo: "ai-search-assistant",
+    motiveJa: "AIごとに得意分野もクセも違う。1つのAIを信じきるのは、1つのメディアだけ見るのと同じ。複数に同時に聞けば、偏りそのものが見えてくる。"
+  },
+  {
+    num: "06",
+    name: "YouTube Grid Manager",
+    nameJa: "YouTube グリッドマネージャー",
+    short: "YT Grid",
+    taglineJa: "再生リストを、探せるライブラリへ。",
+    taglineEn: "Turn playlists into a searchable library.",
+    descJa: "YouTubeの再生リストをNetflixライクなグリッドカードに変換。タイトル・チャンネル名での絞り込み検索、タグ管理、CSV出力に対応。Shadow DOMで既存UIを壊さず埋め込む。",
+    descEn: "Converts YouTube playlists into a Netflix-like grid of cards, with real-time filtering by title and channel, tag management, and CSV export. Embeds via Shadow DOM without breaking the native UI.",
+    features: ["グリッド表示変換", "タイトル/チャンネル絞り込み", "タグ管理・CSV出力", "Shadow DOMで非破壊埋込"],
+    featuresEn: ["Grid view conversion", "Filter by title/channel", "Tags & CSV export", "Non-destructive Shadow DOM"],
+    tech: ["Manifest V3", "Shadow DOM", "MutationObserver", "SPA-aware injection"],
+    color: "EF4444",
+    repo: "youtube-grid-manager",
+    motiveJa: "「あとで見る」に積まれた動画は本棚の積読と同じで、立派な知的資産。グリッドにして検索できれば、アーカイブは使える知識になる。"
+  },
+  {
+    num: "07",
+    name: "Media Bias Detector",
+    nameJa: "メディアバイアス検出器",
+    short: "Bias Lens",
+    taglineJa: "ニュースを、疑うことから始める。",
+    taglineEn: "Start by questioning the news.",
+    descJa: "ニュース記事・SNS投稿にホバーすると、要約・バイアス分析・ファクトチェック・深掘り検索のボタンが出現。ChatGPT・Perplexity・Grokなどへワンクリックで分析を投げられる。",
+    descEn: "Hovering over a news article or social post reveals buttons for summary, bias analysis, fact-check, and deep search, each routing to ChatGPT, Perplexity, Grok and more with one click.",
+    features: ["要約/バイアス分析/ファクトチェック", "X・ニュース・検索に対応", "AI/検索エンジン選択メニュー", "信頼性を自分で確かめる設計"],
+    featuresEn: ["Summary/bias/fact-check", "X, news & search support", "AI & search engine menu", "Designed to verify trust yourself"],
+    tech: ["Manifest V3", "Content Script", "position:fixed overlay", "Multi-AI routing"],
+    color: "06B6D4",
+    repo: "media-bias-detector",
+    motiveJa: "卒論でSNSのアルゴリズムとフィルターバブルを研究した。情報を疑う姿勢は知識やなくて習慣。その習慣を、毎日触るブラウザの中に埋め込みたかった。"
+  },
+  {
+    num: "08",
+    name: "Yodobashi Modern",
+    nameJa: "ヨドバシUIリスタイラー",
+    short: "Yodobashi Modern",
+    taglineJa: "ポイント還元を、見える価格にする。",
+    taglineEn: "Make loyalty points a visible price.",
+    descJa: "ヨドバシ.comのUIを現代化するChrome拡張。フォント・配色・カードUI・ヘッダーを刷新し、ダークモードにも対応。「実質価格バッジ」で価格からポイント還元を引いた金額を表示する。",
+    descEn: "A Chrome extension that modernizes Yodobashi.com — refreshed fonts, colors, card UI, and header, plus dark mode. Its signature feature is the 'net price badge': price minus loyalty points shown on each product.",
+    features: ["全体リスタイル", "ダークモード", "実質価格バッジ (価格−ポイント)", "バナー静音モード"],
+    featuresEn: ["Full restyle", "Dark mode", "Net-price badge (price − points)", "Banner quiet mode"],
+    tech: ["Manifest V3", "data-attribute styling", "Heuristic DOM detection", "chrome.storage.sync"],
+    color: "0EA5E9",
+    repo: "yodobashi-modern",
+    motiveJa: "Amazonの一強は健全やない。ヨドバシの本当の武器はポイント還元やのに、古いUIがそれを見せられてない。対抗馬には、対抗馬なりのUIが要る。"
+  },
+  {
+    num: "09",
+    name: "AI Screen Time Tracker",
+    nameJa: "AI スクリーンタイム計測",
+    short: "AI Screen Time",
+    taglineJa: "AIに使った時間を、見える化する。",
+    taglineEn: "See how much time you actually spend on AI.",
+    descJa: "ChatGPTなどAIサービスを開いている時間を自動計測し、今日・今週・月間の利用時間を可視化するChrome拡張。データはすべてローカル保存で外部に送らない。",
+    descEn: "A Chrome extension that automatically measures time spent on AI services like ChatGPT, visualizing daily, weekly, and monthly usage. All data stays local and is never sent anywhere.",
+    features: ["利用時間を自動計測", "今日/今週/月間の表示", "完全ローカル保存", "AI依存のセルフチェック"],
+    featuresEn: ["Auto time tracking", "Daily/weekly/monthly view", "Fully local storage", "AI-reliance self-check"],
+    tech: ["Manifest V3", "chrome.storage", "Background service worker", "Local-only data"],
+    color: "8B5CF6",
+    repo: "ai-screen-time-tracker",
+    motiveJa: "AIは便利すぎて、気づくと使用量が見えなくなる。スマホのスクリーンタイムと同じで、まず可視化せんと付き合い方は設計できへん。"
+  },
+  {
+    num: "10",
+    name: "Google Maps Timeline Viewer",
+    nameJa: "Googleマップ タイムラインビューア",
+    short: "Timeline Viewer",
+    taglineJa: "消えた移動履歴を、自分の手に戻す。",
+    taglineEn: "Get your location history back.",
+    descJa: "自分の判断でうっかり初期化してしまい、Googleマップのタイムラインが消えてしまったことをきっかけに作った、location-history.jsonビューア。日頃からTakeoutで位置履歴を外部に書き出していたおかげでデータ自体は無事だったので、それをドロップするだけで、日別の地図・滞在ランキング・移動統計・ヒートマップ・自動旅行検出までこなせるビューアにした。",
+    descEn: "A location-history.json viewer, built after I accidentally reset my own device and lost my Google Maps Timeline. The data itself survived because I'd been exporting it via Takeout all along — drop that export in and get a daily map, place ranking, movement stats, a heatmap, and automatic trip detection.",
+    features: ["日別マップ & ルート表示", "滞在ランキング・移動統計", "ヒートマップ・都道府県ビンゴ", "完全ローカル処理"],
+    featuresEn: ["Daily map & routes", "Place ranking & stats", "Heatmap & prefecture bingo", "Fully local processing"],
+    tech: ["HTML/CSS/JS (no build)", "Leaflet.js", "Nominatim geocoding", "IndexedDB"],
+    color: "84A529",
+    repo: "timeline-viewer",
+    motiveJa: "自分の初期化でタイムラインを消してもうた。けど日頃からTakeoutで外部にバックアップしてたおかげでデータ自体は生きてた。「バックアップは取っといて正解やった」を実感した一本。"
+  },
+  {
+    num: "11",
+    name: "Browser Navigator",
+    nameJa: "ブラウザ診断ナビゲーター",
+    short: "Browser Navigator",
+    taglineJa: "自分に合うブラウザを、診断する。",
+    taglineEn: "Find the browser that actually fits you.",
+    descJa: "速度・プライバシー・拡張機能・バッテリー・広告ブロックなど12軸の質問に答えると、Chrome・Firefox・Safari・Edge・Braveから最適なブラウザを診断するWebアプリ。重み付けスコアと機能比較テーブルで結果を提示。",
+    descEn: "A web app that recommends the best browser from Chrome, Firefox, Safari, Edge, and Brave based on a 12-axis quiz covering speed, privacy, extensions, battery, and ad-blocking. Presents results with weighted scores and a feature comparison table.",
+    features: ["12軸の重み付け診断", "Chart.js棒グラフ表示", "機能比較テーブル", "AI Navigatorとシリーズ統一"],
+    featuresEn: ["12-axis weighted quiz", "Chart.js bar graph", "Feature comparison table", "Series-consistent with AI Navigator"],
+    tech: ["Single-file HTML", "Chart.js", "Weighted scoring", "Dark-mode UI"],
+    color: "F59E0B",
+    repo: "browser-navigator",
+    motiveJa: "ツールは思想で選ぶべきやけど、最初の一歩は「自分に何が合うか」を知ること。診断は、押し付けやなく自分で決めるための補助線。"
+  },
+  {
+    num: "12",
+    name: "Library Availability Checker",
+    nameJa: "図書館蔵書チェッカー",
+    short: "Library Checker",
+    taglineJa: "買う前に、借りられるか一目でわかる。",
+    taglineEn: "See if the library has it, before you buy.",
+    descJa: "Amazonのほしい物リスト・カート・商品ページ・検索結果ページで、見ている本が登録した図書館で借りられるかをその場でチェック。カーリルAPIと連携し、登録した図書館ごとに貸出状況を個別表示。図書館だけでなく書店・フリマサイトへのリンクもワンクリックで開ける。",
+    descEn: "Checks whether the book you're viewing on an Amazon wishlist, cart, product page, or search results page is available at your registered libraries — right on the page. Integrates with the Calil API to show availability per library, plus one-click links to bookstores and marketplaces.",
+    features: ["ほしい物リスト・カート・商品・検索結果に対応", "図書館・書店・フリマへのワンクリックリンク", "登録図書館ごとに貸出状況を個別表示", "予約ページへの直リンク"],
+    featuresEn: ["Wishlist, cart, product & search pages", "One-click links to libraries, stores & marketplaces", "Per-library availability breakdown", "Direct links to reservation pages"],
+    tech: ["Manifest V3", "Calil API", "Shadow DOM", "MutationObserver"],
+    color: "2F9E44",
+    repo: "calil-wishlist-checker",
+    demo: true,
+    motiveJa: "Book Search+で本の横断検索はできるようになったけど、「結局どこで借りられるか」は毎回自分で確認してた。複数登録した図書館のうち、どこで借りられるかまでその場でわかるようにした。"
+  }
+];
+
+const BRAND = {
+  philosophy: [
+    {
+      jaTitle: "不満は、設計図である",
+      enTitle: "Frustration is a blueprint",
+      jaBody: "これらのツールはすべて「自分が不便だと感じたこと」から生まれている。検索のノイズ、サブスクの分断、消された位置履歴。不満を放置せず、設計図として読み替える。それが12本に共通する出発点。",
+      enBody: "Every tool here was born from something I personally found inconvenient: search noise, fragmented subscriptions, deleted location history. Rather than tolerating frustration, I read it as a blueprint. That's the shared starting point of all twelve."
+    },
+    {
+      jaTitle: "情報リテラシーは、習慣である",
+      enTitle: "Literacy is a habit, not knowledge",
+      jaBody: "大学でSNSのアルゴリズムとフィルターバブルを研究した経験が、Media Bias DetectorやGoogle Cleaner、AI Navigatorの根っこにある。「疑う」「横断する」「ノイズを削る」を、日々の動作としてブラウザに埋め込んだ。",
+      enBody: "My university research on social-media algorithms and filter bubbles underlies Media Bias Detector, Google Cleaner, and AI Navigator. I embedded 'doubt', 'cross-reference', and 'cut the noise' into the browser as daily actions, not abstract knowledge."
+    },
+    {
+      jaTitle: "プラットフォームに、主導権を渡さない",
+      enTitle: "Don't cede control to platforms",
+      jaBody: "Yodobashi Modernは一強への対抗、Timeline Viewerは自分のデータを自分の手元に置いておく実践。プラットフォームの都合で決まるUIや仕様を、利用者の側から作り変える。小さなコードやけど、思想としては一貫している。",
+      enBody: "Yodobashi Modern resists a monopoly; Timeline Viewer keeps personal data in the user's own hands. I rebuild platform-dictated UIs and specs from the user's side. Small code, but a consistent philosophy."
+    }
+  ]
+};
+
+const PATTERNS = {
+  jaTitle: "12本に共通する設計パターン",
+  enTitle: "The common pattern across all twelve",
+  items: [
+    { ja: "既存のページを壊さず、上から重ねる (Content Script / Shadow DOM)", en: "Overlay, don't replace (Content Script / Shadow DOM)" },
+    { ja: "データは可能な限りローカルに留める (プライバシー優先)", en: "Keep data local whenever possible (privacy first)" },
+    { ja: "APIキーやログイン不要で、誰でもすぐ使える", en: "No API key or login required — usable by anyone instantly" },
+    { ja: "横断・比較・可視化で「選ぶ力」を取り戻す", en: "Cross-reference, compare, visualize — restore the power to choose" }
+  ]
+};
+</script>
+<script>
+function setLang(l) {
+  document.body.className = 'lang-' + l;
+  document.getElementById('btn-ja').classList.toggle('on', l === 'ja');
+  document.getElementById('btn-en').classList.toggle('on', l === 'en');
+}
+
+// Manifesto
+const mg = document.getElementById('manifesto-grid');
+BRAND.philosophy.forEach((p, i) => {
+  const d = document.createElement('div');
+  d.className = 'mani';
+  d.innerHTML = `<div class="idx">${String(i+1).padStart(2,'0')}</div>
+    <h3><span class="ja">${p.jaTitle}</span><span class="en block">${p.enTitle}</span></h3>
+    <p><span class="ja">${p.jaBody}</span><span class="en block">${p.enBody}</span></p>`;
+  mg.appendChild(d);
+});
+
+// 図書館デモ用: タイトルからクイックリンクを組み立てる(実際の拡張機能と同じ発想)
+function buildDemoLinks(title) {
+  const q = encodeURIComponent(title);
+  return [
+    { label: "図書館 (カーリル)", url: `https://calil.jp/openurl?rft.btitle=${q}`, cls: "demo-library" },
+    { label: "紀伊國屋", url: `https://www.google.com/search?q=site:kinokuniya.co.jp+${q}` },
+    { label: "honto", url: `https://www.google.com/search?q=site:honto.jp+${q}` },
+    { label: "楽天ブックス", url: `https://search.rakuten.co.jp/search/mall/${q}/` },
+    { label: "ブックオフ", url: `https://www.google.com/search?q=site:shopping.bookoff.co.jp+${q}` },
+    { label: "メルカリ", url: `https://jp.mercari.com/search?keyword=${q}` },
+  ];
+}
+
+function buildDemoHtml() {
+  return `
+    <div class="tool-demo" data-demo="1">
+      <label class="demo-label"><span class="ja">試してみる — 本のタイトルを入力</span><span class="en block">Try it — enter a book title</span></label>
+      <div class="demo-row">
+        <input type="text" class="demo-input" placeholder="例: 世界史 深読み">
+        <button class="demo-btn" type="button"><span class="ja">検索</span><span class="en inline">Search</span></button>
+      </div>
+      <div class="demo-links"></div>
+      <p class="demo-note">
+        <span class="ja">※ このデモは実際の拡張機能と同じ横断検索リンクを開くだけの簡易版。登録図書館ごとの貸出判定にはAPIキー登録とAmazon連携(拡張機能本体)が必要。</span>
+        <span class="en block">This demo just opens the same cross-search links as the real extension. Per-library availability requires an API key and the actual Amazon extension.</span>
+      </p>
+    </div>`;
+}
+
+// Tools
+const tl = document.getElementById('tools-list');
+TOOLS.forEach(t => {
+  const feats = t.features.map((f,i)=>`<li><span class="ja">${f}</span><span class="en block">${t.featuresEn[i]}</span></li>`).join('');
+  const tech = t.tech.map(x=>`<span>${x}</span>`).join('');
+  const row = document.createElement('div');
+  row.className = 'tool';
+  row.style.setProperty('--tool-color', '#'+t.color);
+  row.innerHTML = `
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">${t.num} · ${t.short}</span></div>
+    <div class="tool-name">${t.name}</div>
+    <div class="tool-tagline"><span class="ja">${t.taglineJa}</span><span class="en block">${t.taglineEn}</span></div>
+    <div class="tool-desc"><span class="ja">${t.descJa}</span><span class="en block">${t.descEn}</span></div>
+    <div class="tool-tech">${tech}</div>
+    <ul class="tool-feats">${feats}</ul>
+    ${t.demo ? buildDemoHtml() : ''}
+    <div class="tool-motive"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      ${t.motiveJa}
+    </div></div>
+    <div class="tool-expand"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus">+</span></div>`;
+  row.addEventListener('click', () => row.classList.toggle('open'));
+
+  if (t.demo) {
+    const demoEl = row.querySelector('.tool-demo');
+    const input = demoEl.querySelector('.demo-input');
+    const btn = demoEl.querySelector('.demo-btn');
+    const linksBox = demoEl.querySelector('.demo-links');
+
+    // デモ操作中はカードの開閉トグルが暴発せんように、ここだけ伝播を止める
+    demoEl.addEventListener('click', (e) => e.stopPropagation());
+
+    const runDemo = () => {
+      const title = input.value.trim();
+      if (!title) { input.focus(); return; }
+      linksBox.innerHTML = '';
+      buildDemoLinks(title).forEach((l) => {
+        const a = document.createElement('a');
+        a.href = l.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'demo-link' + (l.cls ? ' ' + l.cls : '');
+        a.textContent = l.label;
+        linksBox.appendChild(a);
+      });
+    };
+
+    btn.addEventListener('click', runDemo);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') runDemo(); });
+  }
+
+  tl.appendChild(row);
+});
+
+// Pattern
+document.getElementById('pat-title').innerHTML =
+  `<span class="ja">${PATTERNS.jaTitle}</span><span class="en block">${PATTERNS.enTitle}</span>`;
+const pw = document.getElementById('pattern-wrap');
+PATTERNS.items.forEach((it,i)=>{
+  const d = document.createElement('div');
+  d.className = 'pat-item';
+  d.innerHTML = `<span class="pat-n">0${i+1}</span><p><span class="ja">${it.ja}</span><span class="en block">${it.en}</span></p>`;
+  pw.appendChild(d);
+});
+
+// Reveal on scroll
+const io = new IntersectionObserver((es)=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
