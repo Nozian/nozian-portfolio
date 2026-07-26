@@ -1,3 +1,5 @@
+
+Nozian portfolio v2 · HTML
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -6,7 +8,7 @@
 <title>Nozian — Rebuilding the Internet for Myself</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-
+ 
 :root {
   --bg: #ffffff;
   --bg-alt: #f5f5f7;
@@ -22,10 +24,10 @@
   --shadow: 0 1px 2px rgba(0,0,0,0.03), 0 10px 30px rgba(0,0,0,0.06);
   --shadow-hover: 0 4px 10px rgba(0,0,0,0.05), 0 20px 44px rgba(0,0,0,0.09);
 }
-
+ 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-
+ 
 body {
   background: var(--bg);
   color: var(--ink);
@@ -35,12 +37,12 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-
+ 
 ::selection { background: var(--accent); color: #fff; }
-
+ 
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
 .wrap-narrow { max-width: 780px; margin: 0 auto; padding: 0 28px; }
-
+ 
 /* ============ Nav ============ */
 nav.topnav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
@@ -49,6 +51,23 @@ nav.topnav {
   background: rgba(255,255,255,0.72); border-bottom: 1px solid rgba(210,210,215,0.6);
 }
 nav.topnav .wordmark { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+.toc { display: flex; gap: 4px; }
+.toc-link {
+  font-size: 13px; font-weight: 500; color: var(--sub); text-decoration: none;
+  padding: 6px 12px; border-radius: 100px; transition: color 0.2s, background 0.2s;
+}
+.toc-link:hover { color: var(--ink); background: var(--bg-alt); }
+.toc-link.active { color: var(--accent); font-weight: 700; background: var(--accent-dim); }
+.nav-right { display: flex; align-items: center; gap: 18px; }
+@media (max-width: 860px) {
+  .toc { display: none; }
+}
+.toc { display: flex; gap: 22px; }
+.toc a {
+  font-size: 13px; font-weight: 500; color: var(--sub); text-decoration: none;
+}
+.toc a:hover { color: var(--ink); }
+@media (max-width: 720px) { .toc { display: none; } }
 .lang-bar { display: flex; gap: 2px; background: var(--bg-alt); border-radius: 100px; padding: 3px; }
 .lang-bar button {
   border: none; background: none; cursor: pointer;
@@ -56,13 +75,13 @@ nav.topnav .wordmark { font-weight: 700; font-size: 15px; letter-spacing: -0.01e
   padding: 5px 14px; border-radius: 100px; color: var(--sub); transition: all 0.2s;
 }
 .lang-bar button.on { background: var(--ink); color: #fff; }
-
+ 
 .en { display: none; }
 body.lang-en .ja { display: none; }
 body.lang-en .en { display: revert; }
 body.lang-en .en.block { display: block; }
 body.lang-en .en.inline { display: inline; }
-
+ 
 /* ============ Hero ============ */
 header.hero {
   min-height: 92vh; display: flex; flex-direction: column;
@@ -94,9 +113,9 @@ header.hero {
   padding: 6px 14px; border-radius: 100px;
 }
 .hero-meta b { color: var(--ink); font-weight: 700; }
-
+ 
 /* ============ Section frame ============ */
-section { padding: 108px 0; }
+section { padding: 108px 0; scroll-margin-top: 68px; }
 section.alt { background: var(--bg-alt); }
 .sec-head { max-width: 640px; margin: 0 auto 56px; text-align: center; }
 .sec-eyebrow {
@@ -108,7 +127,7 @@ section.alt { background: var(--bg-alt); }
   letter-spacing: -0.02em; margin-bottom: 14px; line-height: 1.3;
 }
 .sec-head p { color: var(--sub); font-size: 1.05rem; line-height: 1.6; }
-
+ 
 /* ============ Manifesto ============ */
 .manifesto-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
@@ -122,7 +141,7 @@ section.alt { background: var(--bg-alt); }
 }
 .mani h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.01em; }
 .mani p { color: var(--sub); font-size: 0.95rem; line-height: 1.7; }
-
+ 
 /* ============ Tools grid ============ */
 .tools-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
@@ -170,7 +189,7 @@ section.alt { background: var(--bg-alt); }
 }
 .tool.open .tool-expand .plus { transform: rotate(45deg); }
 .tool-expand .plus { display: inline-block; transition: transform 0.25s; }
-
+ 
 /* ============ Live demo widget ============ */
 .tool-demo {
   margin: 4px 0 14px; padding: 14px; background: var(--bg-alt); border-radius: var(--radius-md);
@@ -199,7 +218,15 @@ section.alt { background: var(--bg-alt); }
 .demo-link.demo-library { background: var(--accent-dim); border-color: #a9cdf5; color: var(--accent); font-weight: 700; }
 .demo-hint { font-size: 10.5px; color: var(--sub-faint); margin-top: 4px; }
 .demo-note { font-size: 10.5px; color: var(--sub-faint); margin-top: 8px; line-height: 1.5; }
-
+.tool-full-link {
+  display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;
+  font-size: 13px; font-weight: 700; color: #fff; background: var(--tool-color);
+  padding: 9px 16px; border-radius: 100px; text-decoration: none;
+}
+.tool-full-link:hover { opacity: 0.88; }
+.tool-full-link .arrow { transition: transform 0.2s; }
+.tool-full-link:hover .arrow { transform: translateX(3px); }
+ 
 /* ============ Pattern ============ */
 .pattern-grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
@@ -214,7 +241,7 @@ section.alt { background: var(--bg-alt); }
   color: var(--accent); font-size: 12.5px; font-weight: 700; margin-bottom: 14px;
 }
 .pat-item p { font-size: 0.9rem; color: var(--sub); line-height: 1.6; }
-
+ 
 /* ============ Stats ============ */
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
 .stat .n {
@@ -222,7 +249,7 @@ section.alt { background: var(--bg-alt); }
   color: var(--ink);
 }
 .stat .l { color: var(--sub); font-size: 0.92rem; margin-top: 6px; }
-
+ 
 /* ============ Closing ============ */
 .closing { text-align: center; padding: 130px 0; }
 .closing .q {
@@ -230,16 +257,16 @@ section.alt { background: var(--bg-alt); }
   line-height: 1.45; max-width: 18ch; margin: 0 auto 24px;
 }
 .closing .sig { color: var(--sub); font-size: 0.95rem; }
-
+ 
 footer {
   text-align: center; padding: 40px 24px; color: var(--sub-faint); font-size: 12.5px;
   border-top: 1px solid var(--line);
 }
-
+ 
 /* ============ Reveal ============ */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .reveal.in { opacity: 1; transform: translateY(0); }
-
+ 
 @media (max-width: 900px) {
   .manifesto-grid { grid-template-columns: 1fr; }
   .pattern-grid { grid-template-columns: repeat(2, 1fr); }
@@ -257,15 +284,21 @@ footer {
 </style>
 </head>
 <body class="lang-ja">
-
+ 
 <nav class="topnav">
   <div class="wordmark">Nozian</div>
+  <div class="toc">
+    <a class="toc-link" href="#manifesto"><span class="ja">姿勢</span><span class="en inline">Stance</span></a>
+    <a class="toc-link" href="#tools"><span class="ja">作ったもの</span><span class="en inline">Work</span></a>
+    <a class="toc-link" href="#pattern"><span class="ja">共通点</span><span class="en inline">Thread</span></a>
+    <a class="toc-link" href="#stats"><span class="ja">記録</span><span class="en inline">Numbers</span></a>
+  </div>
   <div class="lang-bar">
     <button id="btn-ja" class="on" onclick="setLang('ja')">日本語</button>
     <button id="btn-en" onclick="setLang('en')">EN</button>
   </div>
 </nav>
-
+ 
 <header class="hero">
   <div class="wrap">
     <div class="eyebrow">Nozian — Independent thinking from rural Japan</div>
@@ -284,7 +317,7 @@ footer {
     </div>
   </div>
 </header>
-
+ 
 <section id="manifesto">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -295,7 +328,7 @@ footer {
     <div class="manifesto-grid reveal" id="manifesto-grid"></div>
   </div>
 </section>
-
+ 
 <section id="tools" class="alt">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -306,7 +339,7 @@ footer {
     <div class="tools-grid" id="tools-list"></div>
   </div>
 </section>
-
+ 
 <section id="pattern">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -317,7 +350,7 @@ footer {
     <div class="pattern-grid reveal" id="pattern-wrap"></div>
   </div>
 </section>
-
+ 
 <section id="stats" class="alt">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -332,7 +365,7 @@ footer {
     </div>
   </div>
 </section>
-
+ 
 <section class="closing">
   <div class="wrap-narrow">
     <p class="q reveal">
@@ -342,14 +375,14 @@ footer {
     <div class="sig reveal">— Nozian, 2026</div>
   </div>
 </section>
-
+ 
 <footer>Nozian · Independent thinking from rural Japan · Gunma, Japan</footer>
-
+ 
 <script>
 // ============================================================
 // Nozian Portfolio — Master Tool Data (canonical source)
 // ============================================================
-
+ 
 const TOOLS = [
   {
     num: "01",
@@ -542,10 +575,13 @@ const TOOLS = [
     color: "2F9E44",
     repo: "calil-wishlist-checker",
     demo: true,
+    link: "library-checker.html",
+    linkLabelJa: "Web版を開く",
+    linkLabelEn: "Open the web version",
     motiveJa: "Book Search+で本の横断検索はできるようになったけど、「結局どこで借りられるか」は毎回自分で確認してた。複数登録した図書館のうち、どこで借りられるかまでその場でわかるようにした。"
   }
 ];
-
+ 
 const BRAND = {
   philosophy: [
     {
@@ -568,7 +604,7 @@ const BRAND = {
     }
   ]
 };
-
+ 
 const PATTERNS = {
   jaTitle: "12本に共通する設計パターン",
   enTitle: "The common pattern across all twelve",
@@ -586,7 +622,7 @@ function setLang(l) {
   document.getElementById('btn-ja').classList.toggle('on', l === 'ja');
   document.getElementById('btn-en').classList.toggle('on', l === 'en');
 }
-
+ 
 // Manifesto
 const mg = document.getElementById('manifesto-grid');
 BRAND.philosophy.forEach((p, i) => {
@@ -597,20 +633,22 @@ BRAND.philosophy.forEach((p, i) => {
     <p><span class="ja">${p.jaBody}</span><span class="en block">${p.enBody}</span></p>`;
   mg.appendChild(d);
 });
-
+ 
 // 図書館デモ用: タイトルからクイックリンクを組み立てる(実際の拡張機能と同じ発想)
 function buildDemoLinks(title) {
   const q = encodeURIComponent(title);
   return [
     { label: "図書館 (カーリル)", url: `https://calil.jp/openurl?rft.btitle=${q}`, cls: "demo-library" },
+    { label: "Amazon", url: `https://www.amazon.co.jp/s?k=${q}` },
+    { label: "楽天ブックス", url: `https://search.rakuten.co.jp/search/mall/${q}/` },
     { label: "紀伊國屋", url: `https://www.google.com/search?q=site:kinokuniya.co.jp+${q}` },
     { label: "honto", url: `https://www.google.com/search?q=site:honto.jp+${q}` },
-    { label: "楽天ブックス", url: `https://search.rakuten.co.jp/search/mall/${q}/` },
     { label: "ブックオフ", url: `https://www.google.com/search?q=site:shopping.bookoff.co.jp+${q}` },
+    { label: "バリューブックス", url: `https://www.valuebooks.jp/search?keyword=${q}` },
     { label: "メルカリ", url: `https://jp.mercari.com/search?keyword=${q}` },
   ];
 }
-
+ 
 function buildDemoHtml() {
   return `
     <div class="tool-demo" data-demo="1">
@@ -626,7 +664,7 @@ function buildDemoHtml() {
       </p>
     </div>`;
 }
-
+ 
 // Tools
 const tl = document.getElementById('tools-list');
 TOOLS.forEach(t => {
@@ -640,6 +678,7 @@ TOOLS.forEach(t => {
     <div class="tool-name">${t.name}</div>
     <div class="tool-tagline"><span class="ja">${t.taglineJa}</span><span class="en block">${t.taglineEn}</span></div>
     <div class="tool-desc"><span class="ja">${t.descJa}</span><span class="en block">${t.descEn}</span></div>
+    ${t.link ? `<a class="tool-full-link" href="${t.link}" target="_blank" rel="noopener noreferrer"><span class="ja">${t.linkLabelJa}</span><span class="en inline">${t.linkLabelEn}</span><span class="arrow">→</span></a>` : ''}
     <div class="tool-tech">${tech}</div>
     <ul class="tool-feats">${feats}</ul>
     ${t.demo ? buildDemoHtml() : ''}
@@ -649,16 +688,19 @@ TOOLS.forEach(t => {
     </div></div>
     <div class="tool-expand"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus">+</span></div>`;
   row.addEventListener('click', () => row.classList.toggle('open'));
-
+ 
+  const fullLink = row.querySelector('.tool-full-link');
+  if (fullLink) fullLink.addEventListener('click', (e) => e.stopPropagation());
+ 
   if (t.demo) {
     const demoEl = row.querySelector('.tool-demo');
     const input = demoEl.querySelector('.demo-input');
     const btn = demoEl.querySelector('.demo-btn');
     const linksBox = demoEl.querySelector('.demo-links');
-
+ 
     // デモ操作中はカードの開閉トグルが暴発せんように、ここだけ伝播を止める
     demoEl.addEventListener('click', (e) => e.stopPropagation());
-
+ 
     const runDemo = () => {
       const title = input.value.trim();
       if (!title) { input.focus(); return; }
@@ -673,14 +715,14 @@ TOOLS.forEach(t => {
         linksBox.appendChild(a);
       });
     };
-
+ 
     btn.addEventListener('click', runDemo);
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter') runDemo(); });
   }
-
+ 
   tl.appendChild(row);
 });
-
+ 
 // Pattern
 document.getElementById('pat-title').innerHTML =
   `<span class="ja">${PATTERNS.jaTitle}</span><span class="en block">${PATTERNS.enTitle}</span>`;
@@ -691,12 +733,26 @@ PATTERNS.items.forEach((it,i)=>{
   d.innerHTML = `<span class="pat-n">0${i+1}</span><p><span class="ja">${it.ja}</span><span class="en block">${it.en}</span></p>`;
   pw.appendChild(d);
 });
-
+ 
 // Reveal on scroll
 const io = new IntersectionObserver((es)=>{
   es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+ 
+// TOC scrollspy
+const tocLinks = document.querySelectorAll('.toc-link');
+const tocSections = ['manifesto','tools','pattern','stats']
+  .map(id => document.getElementById(id))
+  .filter(Boolean);
+const tocObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      tocLinks.forEach((l) => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
+    }
+  });
+}, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+tocSections.forEach((s) => tocObserver.observe(s));
 </script>
 </body>
 </html>
