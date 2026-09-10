@@ -130,16 +130,23 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition:none!important; animation:none!important; } }
 .tool-expand { display:none; }
 
-.work-contents { padding-top:40px; padding-bottom:40px; }
-.work-contents h2 { font-size:20px; margin-bottom:20px; }
-.work-contents ol { list-style:none; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px 24px; }
-.work-contents a { display:flex; align-items:baseline; gap:12px; min-height:44px; padding:10px 0; color:var(--ink); font-size:14px; text-decoration:none; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
-.work-contents a:hover { color:var(--accent); }
-.contents-num { color:var(--accent); font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.work-contents { padding-top:40px; padding-bottom:40px; max-width:880px; }
+.contents-box { border:1px solid var(--line); border-radius:12px; background:#f7f8fa; padding:0 28px; }
+.contents-box summary { padding:22px 0; cursor:pointer; font-size:18px; font-weight:700; }
+.contents-box summary::marker { color:var(--sub); }
+.contents-box nav { padding:0 0 24px; }
+.contents-list,.contents-children { list-style:none; margin:0; padding:0; }
+.contents-list > li + li { margin-top:8px; }
+.contents-list a { display:block; padding:8px 12px; border-radius:6px; color:var(--sub); font-size:16px; line-height:1.7; text-decoration:none; overflow-wrap:anywhere; }
+.contents-list > li > a { color:var(--ink); font-weight:600; }
+.contents-list a:hover,.contents-list a:focus-visible { color:var(--accent); background:var(--accent-dim); text-decoration:underline; }
+.contents-children { margin:4px 0 12px 19px; padding-left:14px; border-left:1px solid var(--line); }
+.contents-num { display:inline-block; min-width:28px; color:var(--sub-faint); font-family:'JetBrains Mono',monospace; font-size:13px; }
 .tool, #contents { scroll-margin-top:100px; }
 .back-contents { display:inline-flex; align-self:flex-start; margin-top:16px; color:var(--accent); font-size:14px; padding:8px 0; }
-@media(max-width:900px) { .work-contents ol { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-@media(max-width:620px) { .work-contents ol { grid-template-columns:1fr; } }
+.contents-shortcut { position:fixed; right:20px; bottom:calc(20px + env(safe-area-inset-bottom)); z-index:190; background:white; border:1px solid var(--line); border-radius:100px; padding:10px 18px; min-height:44px; color:var(--ink); font-size:14px; font-weight:600; text-decoration:none; box-shadow:0 4px 16px #14213718; }
+.contents-shortcut:hover { color:var(--accent); background:var(--accent-dim); }
+@media(max-width:620px) { .contents-box { padding:0 18px; } .contents-children { margin-left:10px; padding-left:8px; } .contents-shortcut { right:14px; } }
 </style>
 </head>
 <body class="lang-ja">
@@ -177,7 +184,14 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     </div>
   </div>
 </header>
-<nav class="work-contents wrap" id="contents" aria-labelledby="contents-title"><h2 id="contents-title"><span class="ja">目次 — 作ったもの</span><span class="en inline">Contents — The work</span></h2><ol><li><a href="#tool-01"><span class="contents-num">01</span>Streaming Watchlist Organizer</a></li>
+<div class="work-contents wrap" id="contents">
+  <details class="contents-box" open>
+    <summary id="contents-title"><span class="ja">目次</span><span class="en inline">Table of contents</span></summary>
+    <nav aria-labelledby="contents-title">
+      <ul class="contents-list">
+        <li><a href="#manifesto"><span class="ja">姿勢 — 道具に文句を言う代わりに、作る。</span><span class="en inline">Stance — Instead of complaining about tools, I build them.</span></a></li>
+        <li><a href="#tools"><span class="ja">作ったもの — 12本のツール</span><span class="en inline">The work — Twelve tools</span></a>
+          <ul class="contents-children"><li><a href="#tool-01"><span class="contents-num">01</span>Streaming Watchlist Organizer</a></li>
 <li><a href="#tool-02"><span class="contents-num">02</span>Amazon Wishlist Organizer</a></li>
 <li><a href="#tool-03"><span class="contents-num">03</span>Google Cleaner</a></li>
 <li><a href="#tool-04"><span class="contents-num">04</span>Book Search+ / Amazon Multi Search Helper</a></li>
@@ -188,7 +202,15 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
 <li><a href="#tool-09"><span class="contents-num">09</span>AI Screen Time Tracker</a></li>
 <li><a href="#tool-10"><span class="contents-num">10</span>Google Maps Timeline Viewer</a></li>
 <li><a href="#tool-11"><span class="contents-num">11</span>Browser Navigator</a></li>
-<li><a href="#tool-12"><span class="contents-num">12</span>Library Availability Checker</a></li></ol></nav>
+<li><a href="#tool-12"><span class="contents-num">12</span>Library Availability Checker</a></li></ul>
+        </li>
+        <li><a href="#pattern"><span class="ja">共通点 — 12本に共通する設計パターン</span><span class="en inline">The thread — The common design pattern</span></a></li>
+        <li><a href="#stats"><span class="ja">記録 — 数字で見るNozian</span><span class="en inline">By the numbers — Nozian, counted</span></a></li>
+        <li><a href="#closing"><span class="ja">おわりに</span><span class="en inline">Closing</span></a></li>
+      </ul>
+    </nav>
+  </details>
+</div>
  
 <section id="manifesto">
   <div class="wrap">
@@ -435,7 +457,7 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
   </div>
 </section>
  
-<section class="closing">
+<section class="closing" id="closing">
   <div class="wrap-narrow">
     <p class="q reveal">
       <span class="ja">悪い道具に文句を言うな。良い道具を作れ。</span>
@@ -446,6 +468,7 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
 </section>
  
 <footer>Nozian · Independent thinking from rural Japan · Gunma, Japan</footer>
+<a class="contents-shortcut" href="#contents"><span class="ja">目次</span><span class="en inline">Contents</span></a>
  
 <script>
 // ============================================================
@@ -764,6 +787,11 @@ document.querySelectorAll('.tool').forEach(row => {
     form.addEventListener('submit', runDemo);
   }
 });
+// Return links reveal the full contents, even after it was collapsed.
+document.querySelectorAll('a[href="#contents"]').forEach(link => {
+  link.addEventListener('click', () => { document.querySelector('.contents-box').open = true; });
+});
+
 // TOC scrollspy
 const tocLinks = document.querySelectorAll('.toc-link');
 const tocSections = ['manifesto','tools','pattern','stats']
