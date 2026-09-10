@@ -68,12 +68,15 @@ section.alt { background:var(--bg-alt); }
 .tool-feats { list-style:none; margin-bottom:14px; }
 .tool-feats li { position:relative; color:var(--sub); font-size:14px; padding-left:16px; margin-bottom:7px; }
 .tool-feats li::before { content:'·'; position:absolute; left:0; color:var(--ink); font-weight:700; }
-.tool-motive { display:none; }
-.tool.open .tool-motive { display:block; }
+.tool-motive { display:grid; grid-template-rows:0fr; opacity:0; transition:grid-template-rows 440ms cubic-bezier(.22,1,.36,1), opacity 300ms ease; }
+.tool.open .tool-motive { grid-template-rows:1fr; opacity:1; }
+.tool-motive-clip { min-height:0; overflow:hidden; }
+.tool-motive-inner { transform:translateY(-8px); transition:transform 440ms cubic-bezier(.22,1,.36,1); }
+.tool.open .tool-motive-inner { transform:translateY(0); }
 .tool-motive-inner { border-top:1px solid var(--line); margin-top:16px; padding-top:20px; color:var(--sub); font-size:16px; }
 .tool-motive-inner .label { display:block; color:var(--ink); font-size:14px; font-weight:700; margin-bottom:8px; }
 .tool-expand { border:0; border-top:1px solid var(--line); background:none; font:inherit; cursor:pointer; text-align:left; display:flex; align-items:center; gap:8px; width:100%; color:var(--accent); font-size:14px; font-weight:700; min-height:48px; padding:16px 0 0; margin-top:16px; }
-.tool-expand .plus { font-size:22px; margin-left:auto; transition:transform .2s; }
+.tool-expand .plus { font-size:22px; margin-left:auto; transition:transform 440ms cubic-bezier(.22,1,.36,1); }
 .tool.open .plus { transform:rotate(45deg); }
 .tool-full-link { align-self:flex-start; display:inline-flex; align-items:center; gap:16px; background:var(--ink); color:#fff; padding:10px 18px; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:20px; }
 .tool-full-link:hover { background:var(--accent); }
@@ -217,11 +220,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>Manifest V3</span><span>TMDb API</span><span>MutationObserver</span><span>CSV export</span></div>
     <ul class="tool-feats"><li><span class="ja">3サービス横断 (Prime/Netflix/U-NEXT)</span><span class="en block">Cross-service (Prime/Netflix/U-NEXT)</span></li><li><span class="ja">TMDb連携でジャンル自動分類</span><span class="en block">Auto genre tagging via TMDb</span></li><li><span class="ja">CSV書き出し</span><span class="en block">CSV export</span></li><li><span class="ja">前回データの即時表示 (永続化)</span><span class="en block">Instant reload (persistence)</span></li></ul>
     
-    <div class="tool-motive" id="motive-01"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-01"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-01"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       サブスクが増えるほど「どこで何を観たかったか」が分散していく。サービス側は横断を助けてくれへんから、自分で横断レイヤーを作った。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-01"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-02" style="--tool-color:#F0A500">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">02 · Wishlist Hub</span></div>
     <h3 class="tool-name">Amazon Wishlist Organizer</h3>
@@ -232,11 +235,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>Manifest V3</span><span>Content Script</span><span>CSS Override</span><span>MutationObserver</span></div>
     <ul class="tool-feats"><li><span class="ja">グリッド表示変換</span><span class="en block">Grid view conversion</span></li><li><span class="ja">列数調整 (3〜10列)</span><span class="en block">Adjustable columns (3–10)</span></li><li><span class="ja">余計な要素を非表示</span><span class="en block">Clutter removal</span></li><li><span class="ja">カーリル図書館リンク構想</span><span class="en block">Calil library link concept</span></li></ul>
     
-    <div class="tool-motive" id="motive-02"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-02"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-02"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       ほしい物リストは縦に伸びるだけで、全体を見て「結局どれを買うか」を判断しづらい。一覧性を取り戻せば、買い物メモが意思決定ツールになる。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-02"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-03" style="--tool-color:#34A853">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">03 · Cleaner</span></div>
     <h3 class="tool-name">Google Cleaner</h3>
@@ -247,11 +250,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>Manifest V3</span><span>Content Script</span><span>localStorage</span><span>Embedded sidebar</span></div>
     <ul class="tool-feats"><li><span class="ja">AI要約・広告を除去</span><span class="en block">Remove AI overview & ads</span></li><li><span class="ja">機能ごとにトグル切替</span><span class="en block">Per-feature toggles</span></li><li><span class="ja">検索演算子チートシート内蔵</span><span class="en block">Built-in operator cheat sheet</span></li><li><span class="ja">設定の永続化</span><span class="en block">Persisted settings</span></li></ul>
     
-    <div class="tool-motive" id="motive-03"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-03"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-03"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       検索は情報への入口やのに、その入口がノイズで埋まっていく。フィルターバブルを研究してきた身として、検索結果を「結果だけ」に戻すのは思想の実装でもある。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-03"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-04" style="--tool-color:#A371F7">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">04 · Book Search+</span></div>
     <h3 class="tool-name">Book Search+ / Amazon Multi Search Helper</h3>
@@ -262,11 +265,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>Manifest V3</span><span>Content Script</span><span>URL query builder</span><span>Multi-site routing</span></div>
     <ul class="tool-feats"><li><span class="ja">図書館検索 (カーリル)</span><span class="en block">Library search (Calil)</span></li><li><span class="ja">書店横断 (紀伊國屋/honto)</span><span class="en block">Bookstore search (Kinokuniya/honto)</span></li><li><span class="ja">中古市場 (ブックオフ/メルカリ)</span><span class="en block">Used markets (BookOff/Mercari)</span></li><li><span class="ja">読書の選択肢を拡張</span><span class="en block">Expand reading options</span></li></ul>
     
-    <div class="tool-motive" id="motive-04"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-04"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-04"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       本は買う以外にも、借りる・古本で買う・読み比べるという選択肢がある。Amazonを「発見の起点」にすれば、読書の自由度が一気に広がる。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-04"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-05" style="--tool-color:#5B8DEF">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">05 · AI Navigator</span></div>
     <h3 class="tool-name">AI Navigator / AI Search Assistant</h3>
@@ -277,11 +280,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>Manifest V3</span><span>URL query builder</span><span>Multi-tab launch</span><span>Chart.js (diagnostic)</span></div>
     <ul class="tool-feats"><li><span class="ja">7サービス横断検索</span><span class="en block">7-service cross search</span></li><li><span class="ja">並列ワンクリック起動</span><span class="en block">Parallel one-click launch</span></li><li><span class="ja">回答の比較で偏り検出</span><span class="en block">Bias detection via comparison</span></li><li><span class="ja">AI診断コンテンツへ発展</span><span class="en block">Grew into AI diagnostic quiz</span></li></ul>
     
-    <div class="tool-motive" id="motive-05"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-05"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-05"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       AIごとに得意分野もクセも違う。1つのAIを信じきるのは、1つのメディアだけ見るのと同じ。複数に同時に聞けば、偏りそのものが見えてくる。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-05"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-06" style="--tool-color:#EF4444">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">06 · YT Grid</span></div>
     <h3 class="tool-name">YouTube Grid Manager</h3>
@@ -292,11 +295,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>Manifest V3</span><span>Shadow DOM</span><span>MutationObserver</span><span>SPA-aware injection</span></div>
     <ul class="tool-feats"><li><span class="ja">グリッド表示変換</span><span class="en block">Grid view conversion</span></li><li><span class="ja">タイトル/チャンネル絞り込み</span><span class="en block">Filter by title/channel</span></li><li><span class="ja">タグ管理・CSV出力</span><span class="en block">Tags & CSV export</span></li><li><span class="ja">Shadow DOMで非破壊埋込</span><span class="en block">Non-destructive Shadow DOM</span></li></ul>
     
-    <div class="tool-motive" id="motive-06"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-06"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-06"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       「あとで見る」に積まれた動画は本棚の積読と同じで、立派な知的資産。グリッドにして検索できれば、アーカイブは使える知識になる。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-06"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-07" style="--tool-color:#06B6D4">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">07 · Bias Lens</span></div>
     <h3 class="tool-name">Media Bias Detector</h3>
@@ -307,11 +310,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>Manifest V3</span><span>Content Script</span><span>position:fixed overlay</span><span>Multi-AI routing</span></div>
     <ul class="tool-feats"><li><span class="ja">要約/バイアス分析/ファクトチェック</span><span class="en block">Summary/bias/fact-check</span></li><li><span class="ja">X・ニュース・検索に対応</span><span class="en block">X, news & search support</span></li><li><span class="ja">AI/検索エンジン選択メニュー</span><span class="en block">AI & search engine menu</span></li><li><span class="ja">信頼性を自分で確かめる設計</span><span class="en block">Designed to verify trust yourself</span></li></ul>
     
-    <div class="tool-motive" id="motive-07"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-07"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-07"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       卒論でSNSのアルゴリズムとフィルターバブルを研究した。情報を疑う姿勢は知識やなくて習慣。その習慣を、毎日触るブラウザの中に埋め込みたかった。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-07"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-08" style="--tool-color:#0EA5E9">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">08 · Yodobashi Modern</span></div>
     <h3 class="tool-name">Yodobashi Modern</h3>
@@ -322,11 +325,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>Manifest V3</span><span>data-attribute styling</span><span>Heuristic DOM detection</span><span>chrome.storage.sync</span></div>
     <ul class="tool-feats"><li><span class="ja">全体リスタイル</span><span class="en block">Full restyle</span></li><li><span class="ja">ダークモード</span><span class="en block">Dark mode</span></li><li><span class="ja">実質価格バッジ (価格−ポイント)</span><span class="en block">Net-price badge (price − points)</span></li><li><span class="ja">バナー静音モード</span><span class="en block">Banner quiet mode</span></li></ul>
     
-    <div class="tool-motive" id="motive-08"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-08"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-08"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       Amazonの一強は健全やない。ヨドバシの本当の武器はポイント還元やのに、古いUIがそれを見せられてない。対抗馬には、対抗馬なりのUIが要る。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-08"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-09" style="--tool-color:#8B5CF6">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">09 · AI Screen Time</span></div>
     <h3 class="tool-name">AI Screen Time Tracker</h3>
@@ -337,11 +340,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>Manifest V3</span><span>chrome.storage</span><span>Background service worker</span><span>Local-only data</span></div>
     <ul class="tool-feats"><li><span class="ja">利用時間を自動計測</span><span class="en block">Auto time tracking</span></li><li><span class="ja">今日/今週/月間の表示</span><span class="en block">Daily/weekly/monthly view</span></li><li><span class="ja">完全ローカル保存</span><span class="en block">Fully local storage</span></li><li><span class="ja">AI依存のセルフチェック</span><span class="en block">AI-reliance self-check</span></li></ul>
     
-    <div class="tool-motive" id="motive-09"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-09"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-09"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       AIは便利すぎて、気づくと使用量が見えなくなる。スマホのスクリーンタイムと同じで、まず可視化せんと付き合い方は設計できへん。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-09"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-10" style="--tool-color:#84A529">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">10 · Timeline Viewer</span></div>
     <h3 class="tool-name">Google Maps Timeline Viewer</h3>
@@ -352,11 +355,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>HTML/CSS/JS (no build)</span><span>Leaflet.js</span><span>Nominatim geocoding</span><span>IndexedDB</span></div>
     <ul class="tool-feats"><li><span class="ja">日別マップ & ルート表示</span><span class="en block">Daily map & routes</span></li><li><span class="ja">滞在ランキング・移動統計</span><span class="en block">Place ranking & stats</span></li><li><span class="ja">ヒートマップ・都道府県ビンゴ</span><span class="en block">Heatmap & prefecture bingo</span></li><li><span class="ja">完全ローカル処理</span><span class="en block">Fully local processing</span></li></ul>
     
-    <div class="tool-motive" id="motive-10"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-10"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-10"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       自分の初期化でタイムラインを消してもうた。けど日頃からTakeoutで外部にバックアップしてたおかげでデータ自体は生きてた。「バックアップは取っといて正解やった」を実感した一本。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-10"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-11" style="--tool-color:#F59E0B">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">11 · Browser Navigator</span></div>
     <h3 class="tool-name">Browser Navigator</h3>
@@ -367,11 +370,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <div class="tool-tech"><span>Single-file HTML</span><span>Chart.js</span><span>Weighted scoring</span><span>Dark-mode UI</span></div>
     <ul class="tool-feats"><li><span class="ja">12軸の重み付け診断</span><span class="en block">12-axis weighted quiz</span></li><li><span class="ja">Chart.js棒グラフ表示</span><span class="en block">Chart.js bar graph</span></li><li><span class="ja">機能比較テーブル</span><span class="en block">Feature comparison table</span></li><li><span class="ja">AI Navigatorとシリーズ統一</span><span class="en block">Series-consistent with AI Navigator</span></li></ul>
     
-    <div class="tool-motive" id="motive-11"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-11"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-11"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       ツールは思想で選ぶべきやけど、最初の一歩は「自分に何が合うか」を知ること。診断は、押し付けやなく自分で決めるための補助線。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-11"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
 <div class="tool open" id="tool-12" style="--tool-color:#2F9E44">
     <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">12 · Library Checker</span></div>
     <h3 class="tool-name">Library Availability Checker</h3>
@@ -395,11 +398,11 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
         <span class="en block">Google Search adds 本 (book) to your query. The links below search libraries and bookstores using your input. Per-library availability requires an API key and the actual Amazon extension.</span>
       </p>
     </div>
-    <div class="tool-motive" id="motive-12"><div class="tool-motive-inner">
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-12"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-12"><div class="tool-motive-clip"><div class="tool-motive-inner">
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       Book Search+で本の横断検索はできるようになったけど、「結局どこで借りられるか」は毎回自分で確認してた。複数登録した図書館のうち、どこで借りられるかまでその場でわかるようにした。
-    </div></div>
-    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-12"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div></div>
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div></div>
   </div>
 </section>
  
@@ -721,9 +724,14 @@ function buildDemoLinks(title) {
 document.querySelectorAll('.tool').forEach(row => {
   const expand = row.querySelector('.tool-expand');
   expand.style.display = 'flex';
+  const motive = row.querySelector('.tool-motive');
+  row.classList.remove('open');
+  expand.setAttribute('aria-expanded', 'false');
+  motive.setAttribute('aria-hidden', 'true');
   row.addEventListener('click', () => {
     const open = row.classList.toggle('open');
     expand.setAttribute('aria-expanded', String(open));
+    motive.setAttribute('aria-hidden', String(!open));
   });
   row.querySelectorAll('a').forEach(link => link.addEventListener('click', e => e.stopPropagation()));
   const demoEl = row.querySelector('.tool-demo');
