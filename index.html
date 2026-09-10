@@ -7,278 +7,139 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
  
+/* Nozian — ink, paper and electric blue. */
 :root {
-  --bg: #ffffff;
-  --bg-alt: #f5f5f7;
-  --ink: #1d1d1f;
-  --sub: #6e6e73;
-  --sub-faint: #a1a1a6;
-  --line: #d2d2d7;
-  --accent: #0066cc;
-  --accent-dim: #e8f1fc;
-  --card: #ffffff;
-  --radius-lg: 22px;
-  --radius-md: 14px;
-  --shadow: 0 1px 2px rgba(0,0,0,0.03), 0 10px 30px rgba(0,0,0,0.06);
-  --shadow-hover: 0 4px 10px rgba(0,0,0,0.05), 0 20px 44px rgba(0,0,0,0.09);
+  --bg:#fff; --bg-alt:#f1f4f8; --ink:#142137; --sub:#526078;
+  --sub-faint:#647189; --line:#d9e0ea; --accent:#1754d1;
+  --accent-dim:#eaf0ff; --card:#fff; --radius-lg:20px; --radius-md:12px;
 }
- 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
- 
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'Inter', 'Noto Sans JP', sans-serif;
-  font-size: 16px;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; scroll-padding-top:100px; }
+body { background:var(--bg); color:var(--ink); font-family:'Inter','Noto Sans JP',sans-serif; font-size:16px; line-height:1.8; -webkit-font-smoothing:antialiased; }
+::selection { background:#b9cfff; color:#11213b; }
+button,input { font:inherit; }
+a,button { -webkit-tap-highlight-color:transparent; }
+:focus-visible { outline:3px solid #3774ed; outline-offset:5px; }
+.wrap { width:100%; max-width:1200px; margin:auto; padding:0 48px; }
+.wrap-narrow { max-width:850px; margin:auto; padding:0 32px; }
+.en { display:none; }
+body.lang-en .ja { display:none; }
+body.lang-en .en { display:revert; }
+body.lang-en .en.block { display:block; }
+body.lang-en .en.inline { display:inline; }
+nav.topnav { position:sticky; top:0; z-index:200; min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:12px max(28px,calc((100vw - 1104px)/2)); background:rgba(255,255,255,.94); backdrop-filter:blur(18px); border-bottom:1px solid var(--line); }
+.wordmark { font-size:24px; font-weight:800; letter-spacing:-.06em; }
+.toc { display:flex; gap:8px; }
+.toc-link { color:var(--sub); font-size:14px; font-weight:600; text-decoration:none; padding:8px 12px; border-radius:8px; }
+.toc-link:hover,.toc-link.active { background:var(--accent-dim); color:var(--accent); }
+.lang-bar { display:flex; padding:4px; background:var(--bg-alt); border:1px solid var(--line); border-radius:10px; flex-shrink:0; }
+.lang-bar button { border:0; background:none; cursor:pointer; font-size:14px; font-weight:600; padding:7px 12px; color:var(--sub); border-radius:6px; min-height:40px; }
+.lang-bar button.on { background:var(--ink); color:#fff; }
+header.hero { background:#101f38; color:#fff; padding:88px 0 64px; text-align:left; border-bottom:6px solid #3774ed; }
+.eyebrow { font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.8; letter-spacing:.05em; color:#b9cbeb; margin-bottom:32px; }
+.hero h1 { max-width:980px; font-size:clamp(2.5rem,5.3vw,4.5rem); line-height:1.38; font-weight:800; letter-spacing:-.045em; margin-bottom:28px; overflow-wrap:anywhere; }
+.hero h1 .accent { color:#94b9ff; }
+.hero .sub-title { max-width:640px; color:#ccd6e8; font-size:18px; line-height:1.95; margin-bottom:42px; }
+.hero-meta { display:flex; flex-wrap:wrap; gap:12px 28px; border-top:1px solid #36445d; padding-top:24px; color:#becce2; font-size:14px; }
+.hero-meta .pill { display:inline-flex; align-items:baseline; gap:8px; }
+.hero-meta b { font-size:22px; color:#fff; }
+section { padding:88px 0; scroll-margin-top:90px; }
+section.alt { background:var(--bg-alt); }
+.sec-head { max-width:800px; margin-bottom:40px; text-align:left; }
+.sec-eyebrow { color:var(--accent); font-size:14px; font-weight:700; letter-spacing:.09em; margin-bottom:12px; }
+.sec-head h2 { font-size:clamp(1.8rem,3.3vw,2.7rem); line-height:1.5; letter-spacing:-.035em; margin-bottom:12px; }
+.sec-head p { color:var(--sub); font-size:16px; }
+.manifesto-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:32px; }
+.mani { border-top:2px solid var(--ink); padding-top:24px; }
+.mani .idx { font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:14px; margin-bottom:16px; }
+.mani h3 { font-size:19px; line-height:1.65; margin-bottom:12px; }
+.mani p { color:var(--sub); font-size:16px; }
+.tools-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; align-items:start; }
+.tool { position:relative; min-width:0; background:var(--card); border:1px solid var(--line); border-top:4px solid var(--tool-color); border-radius:var(--radius-lg); padding:30px; display:flex; flex-direction:column; transition:box-shadow .2s,border-color .2s; }
+.tool:hover { box-shadow:0 12px 32px #172b4810; }
+.tool-top { display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+.tool-dot { width:9px; height:9px; border-radius:50%; background:var(--tool-color); }
+.tool-num { color:var(--sub); font-family:'JetBrains Mono',monospace; font-size:13px; }
+.tool-name { font-size:clamp(1.2rem,2vw,1.5rem); line-height:1.4; font-weight:750; letter-spacing:-.025em; margin-bottom:10px; overflow-wrap:anywhere; }
+.tool-tagline { font-size:17px; color:var(--ink); font-weight:700; margin-bottom:18px; }
+.tool-desc { font-size:16px; color:var(--sub); margin-bottom:22px; }
+.tool-tech { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+.tool-tech span { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--sub); background:var(--bg-alt); padding:4px 8px; border-radius:5px; overflow-wrap:anywhere; }
+.tool-feats { list-style:none; margin-bottom:14px; }
+.tool-feats li { position:relative; color:var(--sub); font-size:14px; padding-left:16px; margin-bottom:7px; }
+.tool-feats li::before { content:'·'; position:absolute; left:0; color:var(--ink); font-weight:700; }
+.tool-motive { display:grid; grid-template-rows:0fr; opacity:0; transition:grid-template-rows 440ms cubic-bezier(.22,1,.36,1), opacity 300ms ease; }
+.tool.open .tool-motive { grid-template-rows:1fr; opacity:1; }
+.tool-motive-clip { min-height:0; overflow:hidden; }
+.tool-motive-inner { transform:translateY(-8px); transition:transform 440ms cubic-bezier(.22,1,.36,1); }
+.tool.open .tool-motive-inner { transform:translateY(0); }
+.tool-motive-inner { border-top:1px solid var(--line); margin-top:16px; padding-top:20px; color:var(--sub); font-size:16px; }
+.tool-motive-inner .label { display:block; color:var(--ink); font-size:14px; font-weight:700; margin-bottom:8px; }
+.tool-expand { border:0; border-top:1px solid var(--line); background:none; font:inherit; cursor:pointer; text-align:left; display:flex; align-items:center; gap:8px; width:100%; color:var(--accent); font-size:14px; font-weight:700; min-height:48px; padding:16px 0 0; margin-top:16px; }
+.tool-expand .plus { font-size:22px; margin-left:auto; transition:transform 440ms cubic-bezier(.22,1,.36,1); }
+.tool.open .plus { transform:rotate(45deg); }
+.tool-full-link { align-self:flex-start; display:inline-flex; align-items:center; gap:16px; background:var(--ink); color:#fff; padding:10px 18px; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; margin-bottom:20px; }
+.tool-full-link:hover { background:var(--accent); }
+.tool-github-link { align-self:flex-start; display:inline-flex; align-items:center; gap:12px; min-height:44px; padding:9px 16px; margin-bottom:20px; border:1px solid var(--line); border-radius:8px; color:var(--accent); font-size:14px; font-weight:600; text-decoration:none; }
+.tool-github-link:hover { background:var(--accent-dim); border-color:var(--accent); }
+.tool-demo { padding:18px; background:var(--bg-alt); border-radius:12px; margin:8px 0 14px; }
+.demo-label { display:block; font-size:14px; font-weight:700; margin-bottom:12px; }
+.demo-row { display:flex; gap:8px; }
+.demo-input { min-width:0; width:100%; flex:1; padding:10px 12px; border:1px solid #a5b2c6; background:white; border-radius:8px; font-size:16px; color:var(--ink); }
+.demo-btn { cursor:pointer; border:0; background:var(--accent); color:white; border-radius:8px; padding:10px 16px; font-size:14px; font-weight:600; }
+.demo-links { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.demo-link { display:inline-block; padding:8px 10px; font-size:14px; color:var(--accent); background:white; border:1px solid var(--line); border-radius:6px; text-decoration:none; }
+.demo-link:hover { text-decoration:underline; }
+.demo-note,.demo-hint { font-size:12px; color:var(--sub); line-height:1.8; margin-top:12px; }
+.pattern-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px; }
+.pat-item { border-top:1px solid var(--line); padding-top:24px; }
+.pat-n { font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--accent); display:block; margin-bottom:16px; }
+.pat-item p { font-size:16px; color:var(--sub); }
+.stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px; }
+.stat { border-left:2px solid #c4d1e5; padding-left:24px; }
+.stat .n { font-size:clamp(3rem,6vw,4.5rem); line-height:1.2; letter-spacing:-.06em; font-weight:800; color:var(--accent); }
+.stat .l { font-size:14px; margin-top:12px; color:var(--sub); }
+.closing { padding:88px 0; background:#101f38; color:white; text-align:center; }
+.closing .q { font-size:clamp(1.5rem,3vw,2.5rem); font-weight:700; letter-spacing:-.025em; line-height:1.7; margin-bottom:24px; }
+.closing .sig { font-size:14px; color:#bdcbe2; }
+footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
+.reveal { opacity:1; transform:none; }
+@media(max-width:900px) {
+  .toc { display:none; }
+  .wrap { padding:0 28px; }
+  .manifesto-grid { grid-template-columns:1fr; gap:32px; }
+  .pattern-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .tool { padding:24px; }
 }
- 
-::selection { background: var(--accent); color: #fff; }
- 
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
-.wrap-narrow { max-width: 780px; margin: 0 auto; padding: 0 28px; }
- 
-/* ============ Nav ============ */
-nav.topnav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 52px; display: flex; align-items: center; justify-content: space-between;
-  padding: 0 24px; backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(255,255,255,0.72); border-bottom: 1px solid rgba(210,210,215,0.6);
+@media(max-width:620px) {
+  nav.topnav { min-height:68px; padding:10px 20px; }
+  .wrap { padding:0 22px; }
+  header.hero { padding:54px 0 38px; }
+  .eyebrow { margin-bottom:22px; letter-spacing:0; }
+  .hero h1 { font-size:clamp(2rem,8.5vw,3.2rem); line-height:1.5; }
+  .hero .sub-title { font-size:16px; margin-bottom:28px; }
+  .hero-meta { gap:10px 20px; }
+  section { padding:56px 0; }
+  .sec-head { margin-bottom:28px; }
+  .tools-grid { grid-template-columns:minmax(0,1fr); gap:20px; }
+  .stats { grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 16px; }
+  .stat { padding-left:16px; }
+  .closing { padding:60px 0; }
 }
-nav.topnav .wordmark { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
-.toc { display: flex; gap: 4px; }
-.toc-link {
-  font-size: 13px; font-weight: 500; color: var(--sub); text-decoration: none;
-  padding: 6px 12px; border-radius: 100px; transition: color 0.2s, background 0.2s;
-}
-.toc-link:hover { color: var(--ink); background: var(--bg-alt); }
-.toc-link.active { color: var(--accent); font-weight: 700; background: var(--accent-dim); }
-.nav-right { display: flex; align-items: center; gap: 18px; }
-@media (max-width: 860px) {
-  .toc { display: none; }
-}
-.toc { display: flex; gap: 22px; }
-.toc a {
-  font-size: 13px; font-weight: 500; color: var(--sub); text-decoration: none;
-}
-.toc a:hover { color: var(--ink); }
-@media (max-width: 720px) { .toc { display: none; } }
-.lang-bar { display: flex; gap: 2px; background: var(--bg-alt); border-radius: 100px; padding: 3px; }
-.lang-bar button {
-  border: none; background: none; cursor: pointer;
-  font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600;
-  padding: 5px 14px; border-radius: 100px; color: var(--sub); transition: all 0.2s;
-}
-.lang-bar button.on { background: var(--ink); color: #fff; }
- 
-.en { display: none; }
-body.lang-en .ja { display: none; }
-body.lang-en .en { display: revert; }
-body.lang-en .en.block { display: block; }
-body.lang-en .en.inline { display: inline; }
- 
-/* ============ Hero ============ */
-header.hero {
-  min-height: 92vh; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; text-align: center;
-  padding: 120px 24px 80px;
-}
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 13px; font-weight: 600; color: var(--accent);
-  background: var(--accent-dim); padding: 6px 16px; border-radius: 100px;
-  margin-bottom: 28px;
-}
-.hero h1 {
-  font-family: 'Inter', 'Noto Sans JP', sans-serif; font-weight: 800;
-  font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.25;
-  letter-spacing: -0.03em; max-width: 16ch; margin: 0 auto 22px;
-}
-.hero h1 .accent { color: var(--accent); }
-.hero .sub-title {
-  font-size: clamp(1.05rem, 2vw, 1.3rem); color: var(--sub); font-weight: 400;
-  max-width: 46ch; margin: 0 auto 40px; line-height: 1.6;
-}
-.hero-meta {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
-  font-size: 13.5px; color: var(--sub);
-}
-.hero-meta span.pill {
-  background: var(--bg-alt); border: 1px solid var(--line);
-  padding: 6px 14px; border-radius: 100px;
-}
-.hero-meta b { color: var(--ink); font-weight: 700; }
- 
-/* ============ Section frame ============ */
-section { padding: 108px 0; scroll-margin-top: 68px; }
-section.alt { background: var(--bg-alt); }
-.sec-head { max-width: 640px; margin: 0 auto 56px; text-align: center; }
-.sec-eyebrow {
-  font-size: 13px; font-weight: 700; color: var(--accent);
-  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;
-}
-.sec-head h2 {
-  font-size: clamp(1.7rem, 3.4vw, 2.6rem); font-weight: 800;
-  letter-spacing: -0.02em; margin-bottom: 14px; line-height: 1.3;
-}
-.sec-head p { color: var(--sub); font-size: 1.05rem; line-height: 1.6; }
- 
-/* ============ Manifesto ============ */
-.manifesto-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-}
-.mani {
-  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  padding: 32px 28px;
-}
-.mani .idx {
-  font-size: 13px; font-weight: 700; color: var(--sub-faint); margin-bottom: 18px;
-}
-.mani h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.01em; }
-.mani p { color: var(--sub); font-size: 0.95rem; line-height: 1.7; }
- 
-/* ============ Tools grid ============ */
-.tools-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
-}
-.tool {
-  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  padding: 28px 26px; cursor: pointer; transition: box-shadow 0.25s, transform 0.25s;
-  display: flex; flex-direction: column;
-}
-.tool:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
-.tool-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-.tool-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--tool-color); flex-shrink: 0; }
-.tool-num { font-size: 12.5px; font-weight: 700; color: var(--sub-faint); }
-.tool-name { font-size: 1.08rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
-.tool-tagline { font-size: 0.95rem; color: var(--tool-color); font-weight: 600; margin-bottom: 12px; }
-.tool-desc { color: var(--sub); font-size: 0.92rem; line-height: 1.65; margin-bottom: 16px; }
-.tool-tech { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-.tool-tech span {
-  font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--sub);
-  background: var(--bg-alt); border-radius: 6px; padding: 3px 8px;
-}
-.tool-feats { list-style: none; margin-bottom: 4px; }
-.tool-feats li {
-  font-size: 0.86rem; color: var(--sub); padding-left: 16px; position: relative; margin-bottom: 5px;
-}
-.tool-feats li::before {
-  content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px;
-  border-radius: 50%; background: var(--tool-color);
-}
-.tool-motive {
-  max-height: 0; overflow: hidden; transition: max-height 0.35s ease;
-}
-.tool.open .tool-motive { max-height: 260px; }
-.tool-motive-inner {
-  margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line);
-  font-size: 0.88rem; color: var(--sub); line-height: 1.7;
-}
-.tool-motive-inner .label {
-  display: block; font-size: 11.5px; font-weight: 700; color: var(--ink);
-  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
-}
-.tool-expand {
-  margin-top: auto; padding-top: 14px; font-size: 12.5px; font-weight: 600; color: var(--accent);
-  display: flex; align-items: center; gap: 4px;
-}
-.tool.open .tool-expand .plus { transform: rotate(45deg); }
-.tool-expand .plus { display: inline-block; transition: transform 0.25s; }
- 
-/* ============ Live demo widget ============ */
-.tool-demo {
-  margin: 4px 0 14px; padding: 14px; background: var(--bg-alt); border-radius: var(--radius-md);
-}
-.demo-label {
-  display: block; font-size: 11px; font-weight: 700; color: var(--ink);
-  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;
-}
-.demo-row { display: flex; gap: 8px; }
-.demo-input {
-  flex: 1; min-width: 0; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px;
-  font-size: 13px; font-family: inherit; background: #fff; color: var(--ink);
-}
-.demo-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-.demo-btn {
-  padding: 8px 16px; border: none; border-radius: 8px; background: var(--accent);
-  color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
-}
-.demo-btn:hover { background: #0055aa; }
-.demo-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-.demo-link {
-  font-size: 11px; padding: 4px 10px; border-radius: 100px; background: #fff;
-  border: 1px solid var(--line); color: var(--ink); text-decoration: none;
-}
-.demo-link:hover { background: var(--bg-alt); }
-.demo-link.demo-library { background: var(--accent-dim); border-color: #a9cdf5; color: var(--accent); font-weight: 700; }
-.demo-hint { font-size: 10.5px; color: var(--sub-faint); margin-top: 4px; }
-.demo-note { font-size: 10.5px; color: var(--sub-faint); margin-top: 8px; line-height: 1.5; }
-.tool-full-link {
-  display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;
-  font-size: 13px; font-weight: 700; color: #fff; background: var(--tool-color);
-  padding: 9px 16px; border-radius: 100px; text-decoration: none;
-}
-.tool-full-link:hover { opacity: 0.88; }
-.tool-full-link .arrow { transition: transform 0.2s; }
-.tool-full-link:hover .arrow { transform: translateX(3px); }
- 
-/* ============ Pattern ============ */
-.pattern-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-}
-.pat-item {
-  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md);
-  padding: 22px 20px;
-}
-.pat-n {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 28px; height: 28px; border-radius: 50%; background: var(--accent-dim);
-  color: var(--accent); font-size: 12.5px; font-weight: 700; margin-bottom: 14px;
-}
-.pat-item p { font-size: 0.9rem; color: var(--sub); line-height: 1.6; }
- 
-/* ============ Stats ============ */
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
-.stat .n {
-  font-size: clamp(2.6rem, 5vw, 3.6rem); font-weight: 800; letter-spacing: -0.02em;
-  color: var(--ink);
-}
-.stat .l { color: var(--sub); font-size: 0.92rem; margin-top: 6px; }
- 
-/* ============ Closing ============ */
-.closing { text-align: center; padding: 130px 0; }
-.closing .q {
-  font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em;
-  line-height: 1.45; max-width: 18ch; margin: 0 auto 24px;
-}
-.closing .sig { color: var(--sub); font-size: 0.95rem; }
- 
-footer {
-  text-align: center; padding: 40px 24px; color: var(--sub-faint); font-size: 12.5px;
-  border-top: 1px solid var(--line);
-}
- 
-/* ============ Reveal ============ */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.in { opacity: 1; transform: translateY(0); }
- 
-@media (max-width: 900px) {
-  .manifesto-grid { grid-template-columns: 1fr; }
-  .pattern-grid { grid-template-columns: repeat(2, 1fr); }
-  .stats { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 560px) {
-  .pattern-grid { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: repeat(2, 1fr); }
-  section { padding: 76px 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
-  .reveal { opacity: 1; transform: none; }
-}
+@media(max-width:380px) { .pattern-grid { grid-template-columns:1fr; } .tool { padding:20px; } .demo-row { flex-wrap:wrap; } .demo-btn { flex-grow:1; } }
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition:none!important; animation:none!important; } }
+.tool-expand { display:none; }
+
+.work-contents { padding-top:40px; padding-bottom:40px; }
+.work-contents h2 { font-size:20px; margin-bottom:20px; }
+.work-contents ol { list-style:none; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px 24px; }
+.work-contents a { display:flex; align-items:baseline; gap:12px; min-height:44px; padding:10px 0; color:var(--ink); font-size:14px; text-decoration:none; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
+.work-contents a:hover { color:var(--accent); }
+.contents-num { color:var(--accent); font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.tool, #contents { scroll-margin-top:100px; }
+.back-contents { display:inline-flex; align-self:flex-start; margin-top:16px; color:var(--accent); font-size:14px; padding:8px 0; }
+@media(max-width:900px) { .work-contents ol { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:620px) { .work-contents ol { grid-template-columns:1fr; } }
 </style>
 </head>
 <body class="lang-ja">
@@ -286,14 +147,15 @@ footer {
 <nav class="topnav">
   <div class="wordmark">Nozian</div>
   <div class="toc">
+    <a class="toc-link" href="#contents"><span class="ja">目次</span><span class="en inline">Contents</span></a>
     <a class="toc-link" href="#manifesto"><span class="ja">姿勢</span><span class="en inline">Stance</span></a>
     <a class="toc-link" href="#tools"><span class="ja">作ったもの</span><span class="en inline">Work</span></a>
     <a class="toc-link" href="#pattern"><span class="ja">共通点</span><span class="en inline">Thread</span></a>
     <a class="toc-link" href="#stats"><span class="ja">記録</span><span class="en inline">Numbers</span></a>
   </div>
   <div class="lang-bar">
-    <button id="btn-ja" class="on" onclick="setLang('ja')">日本語</button>
-    <button id="btn-en" onclick="setLang('en')">EN</button>
+    <button id="btn-ja" aria-pressed="true" class="on" onclick="setLang('ja')">日本語</button>
+    <button id="btn-en" aria-pressed="false" onclick="setLang('en')">EN</button>
   </div>
 </nav>
  
@@ -315,6 +177,18 @@ footer {
     </div>
   </div>
 </header>
+<nav class="work-contents wrap" id="contents" aria-labelledby="contents-title"><h2 id="contents-title"><span class="ja">目次 — 作ったもの</span><span class="en inline">Contents — The work</span></h2><ol><li><a href="#tool-01"><span class="contents-num">01</span>Streaming Watchlist Organizer</a></li>
+<li><a href="#tool-02"><span class="contents-num">02</span>Amazon Wishlist Organizer</a></li>
+<li><a href="#tool-03"><span class="contents-num">03</span>Google Cleaner</a></li>
+<li><a href="#tool-04"><span class="contents-num">04</span>Book Search+ / Amazon Multi Search Helper</a></li>
+<li><a href="#tool-05"><span class="contents-num">05</span>AI Navigator / AI Search Assistant</a></li>
+<li><a href="#tool-06"><span class="contents-num">06</span>YouTube Grid Manager</a></li>
+<li><a href="#tool-07"><span class="contents-num">07</span>Media Bias Detector</a></li>
+<li><a href="#tool-08"><span class="contents-num">08</span>Yodobashi Modern</a></li>
+<li><a href="#tool-09"><span class="contents-num">09</span>AI Screen Time Tracker</a></li>
+<li><a href="#tool-10"><span class="contents-num">10</span>Google Maps Timeline Viewer</a></li>
+<li><a href="#tool-11"><span class="contents-num">11</span>Browser Navigator</a></li>
+<li><a href="#tool-12"><span class="contents-num">12</span>Library Availability Checker</a></li></ol></nav>
  
 <section id="manifesto">
   <div class="wrap">
@@ -323,7 +197,9 @@ footer {
       <h2><span class="ja">道具に文句を言う代わりに、作る。</span><span class="en block">Instead of complaining about tools, I build them.</span></h2>
       <p><span class="ja">趣味の小品ではなく、ひとつの一貫した思想の実装。</span><span class="en block">These aren't hobby projects — they're one consistent philosophy, implemented.</span></p>
     </div>
-    <div class="manifesto-grid reveal" id="manifesto-grid"></div>
+    <div class="manifesto-grid reveal" id="manifesto-grid"><div class="mani"><div class="idx">01</div><h3><span class="ja">不満は、設計図である</span><span class="en block">Frustration is a blueprint</span></h3><p><span class="ja">これらのツールはすべて「自分が不便だと感じたこと」から生まれている。検索のノイズ、サブスクの分断、消された位置履歴。不満を放置せず、設計図として読み替える。それが12本に共通する出発点。</span><span class="en block">Every tool here was born from something I personally found inconvenient: search noise, fragmented subscriptions, deleted location history. Rather than tolerating frustration, I read it as a blueprint. That's the shared starting point of all twelve.</span></p></div>
+<div class="mani"><div class="idx">02</div><h3><span class="ja">情報リテラシーは、習慣である</span><span class="en block">Literacy is a habit, not knowledge</span></h3><p><span class="ja">大学でSNSのアルゴリズムとフィルターバブルを研究した経験が、Media Bias DetectorやGoogle Cleaner、AI Navigatorの根っこにある。「疑う」「横断する」「ノイズを削る」を、日々の動作としてブラウザに埋め込んだ。</span><span class="en block">My university research on social-media algorithms and filter bubbles underlies Media Bias Detector, Google Cleaner, and AI Navigator. I embedded 'doubt', 'cross-reference', and 'cut the noise' into the browser as daily actions, not abstract knowledge.</span></p></div>
+<div class="mani"><div class="idx">03</div><h3><span class="ja">プラットフォームに、主導権を渡さない</span><span class="en block">Don't cede control to platforms</span></h3><p><span class="ja">Yodobashi Modernは一強への対抗、Timeline Viewerは自分のデータを自分の手元に置いておく実践。プラットフォームの都合で決まるUIや仕様を、利用者の側から作り変える。小さなコードやけど、思想としては一貫している。</span><span class="en block">Yodobashi Modern resists a monopoly; Timeline Viewer keeps personal data in the user's own hands. I rebuild platform-dictated UIs and specs from the user's side. Small code, but a consistent philosophy.</span></p></div></div>
   </div>
 </section>
  
@@ -332,9 +208,201 @@ footer {
     <div class="sec-head reveal">
       <div class="sec-eyebrow"><span class="ja">作ったもの</span><span class="en inline">The work</span></div>
       <h2><span class="ja">12本のツール</span><span class="en block">Twelve tools</span></h2>
-      <p><span class="ja">カードをタップすると、それを作った動機が開く。</span><span class="en block">Tap any card to see why it was built.</span></p>
+      <p><span class="ja">それぞれの機能と、作った動機を紹介。</span><span class="en block">Explore each tool’s features and why it was built.</span></p>
     </div>
-    <div class="tools-grid" id="tools-list"></div>
+    <div class="tools-grid" id="tools-list"><div class="tool open" id="tool-01" style="--tool-color:#E0506E">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">01 · SWO</span></div>
+    <h3 class="tool-name">Streaming Watchlist Organizer</h3>
+    <div class="tool-tagline"><span class="ja">積み動画を、ひとつの一覧に。</span><span class="en block">One list for everything you want to watch.</span></div>
+    <div class="tool-desc"><span class="ja">Prime Video・Netflix・U-NEXTのウォッチリストを1つの拡張機能でジャンル別に整理。TMDb連携でジャンル自動分類、CSV書き出し、外部サイト連携まで対応。</span><span class="en block">Unifies the watchlists of Prime Video, Netflix, and U-NEXT into a single extension, with automatic genre classification via TMDb, CSV export, and external-site linking.</span></div>
+    
+    <a class="tool-github-link" href="https://github.com/Nozian/stream-list-app" target="_blank" rel="noopener noreferrer" aria-label="Streaming Watchlist Organizer — GitHub"><span class="ja">GitHubで見る</span><span class="en inline">View on GitHub</span><span aria-hidden="true">↗</span></a>
+    <div class="tool-tech"><span>Manifest V3</span><span>TMDb API</span><span>MutationObserver</span><span>CSV export</span></div>
+    <ul class="tool-feats"><li><span class="ja">3サービス横断 (Prime/Netflix/U-NEXT)</span><span class="en block">Cross-service (Prime/Netflix/U-NEXT)</span></li><li><span class="ja">TMDb連携でジャンル自動分類</span><span class="en block">Auto genre tagging via TMDb</span></li><li><span class="ja">CSV書き出し</span><span class="en block">CSV export</span></li><li><span class="ja">前回データの即時表示 (永続化)</span><span class="en block">Instant reload (persistence)</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-01"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-01"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      サブスクが増えるほど「どこで何を観たかったか」が分散していく。サービス側は横断を助けてくれへんから、自分で横断レイヤーを作った。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-02" style="--tool-color:#F0A500">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">02 · Wishlist Hub</span></div>
+    <h3 class="tool-name">Amazon Wishlist Organizer</h3>
+    <div class="tool-tagline"><span class="ja">ほしい物リストを、判断できる画面に。</span><span class="en block">Turn your wishlist into a screen you can actually scan.</span></div>
+    <div class="tool-desc"><span class="ja">Amazonのほしい物リストをコンパクトなグリッド表示に変換。一行により多くのアイテムを並べ、画像・タイトル・価格だけのクリーンな一覧にする。列数は3〜10列で調整可能。</span><span class="en block">Converts the Amazon wishlist into a compact grid view, packing more items per row and leaving a clean list of image, title, and price. Column count adjustable from 3 to 10.</span></div>
+    
+    <a class="tool-github-link" href="https://github.com/Nozian/Amazon-Wishlist-Organizer" target="_blank" rel="noopener noreferrer" aria-label="Amazon Wishlist Organizer — GitHub"><span class="ja">GitHubで見る</span><span class="en inline">View on GitHub</span><span aria-hidden="true">↗</span></a>
+    <div class="tool-tech"><span>Manifest V3</span><span>Content Script</span><span>CSS Override</span><span>MutationObserver</span></div>
+    <ul class="tool-feats"><li><span class="ja">グリッド表示変換</span><span class="en block">Grid view conversion</span></li><li><span class="ja">列数調整 (3〜10列)</span><span class="en block">Adjustable columns (3–10)</span></li><li><span class="ja">余計な要素を非表示</span><span class="en block">Clutter removal</span></li><li><span class="ja">カーリル図書館リンク構想</span><span class="en block">Calil library link concept</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-02"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-02"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      ほしい物リストは縦に伸びるだけで、全体を見て「結局どれを買うか」を判断しづらい。一覧性を取り戻せば、買い物メモが意思決定ツールになる。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-03" style="--tool-color:#34A853">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">03 · Cleaner</span></div>
+    <h3 class="tool-name">Google Cleaner</h3>
+    <div class="tool-tagline"><span class="ja">検索結果を、検索結果だけに。</span><span class="en block">Search results, and nothing else.</span></div>
+    <div class="tool-desc"><span class="ja">Google検索から「AI要約」「他の人はこちらも検索」「関連する質問」などのノイズを除去。設定パネルを検索結果ページに直接埋め込み、機能ごとにオン/オフできる。</span><span class="en block">Removes noise from Google Search — AI Overview, 'People Also Search For', 'People Also Ask' and more. A settings panel injected into the results page lets you toggle each feature on or off.</span></div>
+    
+    <a class="tool-github-link" href="https://github.com/Nozian/Google-Cleaner" target="_blank" rel="noopener noreferrer" aria-label="Google Cleaner — GitHub"><span class="ja">GitHubで見る</span><span class="en inline">View on GitHub</span><span aria-hidden="true">↗</span></a>
+    <div class="tool-tech"><span>Manifest V3</span><span>Content Script</span><span>localStorage</span><span>Embedded sidebar</span></div>
+    <ul class="tool-feats"><li><span class="ja">AI要約・広告を除去</span><span class="en block">Remove AI overview & ads</span></li><li><span class="ja">機能ごとにトグル切替</span><span class="en block">Per-feature toggles</span></li><li><span class="ja">検索演算子チートシート内蔵</span><span class="en block">Built-in operator cheat sheet</span></li><li><span class="ja">設定の永続化</span><span class="en block">Persisted settings</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-03"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-03"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      検索は情報への入口やのに、その入口がノイズで埋まっていく。フィルターバブルを研究してきた身として、検索結果を「結果だけ」に戻すのは思想の実装でもある。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-04" style="--tool-color:#A371F7">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">04 · Book Search+</span></div>
+    <h3 class="tool-name">Book Search+ / Amazon Multi Search Helper</h3>
+    <div class="tool-tagline"><span class="ja">Amazonを、本の発見装置にする。</span><span class="en block">Turn Amazon into a discovery engine for books.</span></div>
+    <div class="tool-desc"><span class="ja">Amazonの商品ページから、図書館・書店・中古市場を横断検索。紀伊國屋・honto・ブックオフ・メルカリ・楽天、そしてカーリルによる図書館蔵書検索まで一括で開ける。</span><span class="en block">From any Amazon product page, search across libraries, bookstores, and used-book markets at once — Kinokuniya, honto, BookOff, Mercari, Rakuten, and Calil library catalogs.</span></div>
+    
+    <a class="tool-github-link" href="https://github.com/Nozian/Amazon-Multi-Search-Helper" target="_blank" rel="noopener noreferrer" aria-label="Book Search+ / Amazon Multi Search Helper — GitHub"><span class="ja">GitHubで見る</span><span class="en inline">View on GitHub</span><span aria-hidden="true">↗</span></a>
+    <div class="tool-tech"><span>Manifest V3</span><span>Content Script</span><span>URL query builder</span><span>Multi-site routing</span></div>
+    <ul class="tool-feats"><li><span class="ja">図書館検索 (カーリル)</span><span class="en block">Library search (Calil)</span></li><li><span class="ja">書店横断 (紀伊國屋/honto)</span><span class="en block">Bookstore search (Kinokuniya/honto)</span></li><li><span class="ja">中古市場 (ブックオフ/メルカリ)</span><span class="en block">Used markets (BookOff/Mercari)</span></li><li><span class="ja">読書の選択肢を拡張</span><span class="en block">Expand reading options</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-04"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-04"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      本は買う以外にも、借りる・古本で買う・読み比べるという選択肢がある。Amazonを「発見の起点」にすれば、読書の自由度が一気に広がる。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-05" style="--tool-color:#5B8DEF">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">05 · AI Navigator</span></div>
+    <h3 class="tool-name">AI Navigator / AI Search Assistant</h3>
+    <div class="tool-tagline"><span class="ja">1つの質問を、複数のAIへ同時に。</span><span class="en block">One question, sent to every AI at once.</span></div>
+    <div class="tool-desc"><span class="ja">1つの質問をChatGPT・Claude・Gemini・Perplexity、さらにGoogle・Bing・DuckDuckGoへ並列で投げる横断検索ランチャー。回答を比較することで、特定モデルの偏りに引っ張られず情報を得る。</span><span class="en block">A cross-search launcher that fires one question at ChatGPT, Claude, Gemini, Perplexity, plus Google, Bing, and DuckDuckGo in parallel. Comparing answers guards against the bias of any single AI.</span></div>
+    
+    <a class="tool-github-link" href="https://github.com/Nozian/AI-Search-Assistant" target="_blank" rel="noopener noreferrer" aria-label="AI Navigator / AI Search Assistant — GitHub"><span class="ja">GitHubで見る</span><span class="en inline">View on GitHub</span><span aria-hidden="true">↗</span></a>
+    <div class="tool-tech"><span>Manifest V3</span><span>URL query builder</span><span>Multi-tab launch</span><span>Chart.js (diagnostic)</span></div>
+    <ul class="tool-feats"><li><span class="ja">7サービス横断検索</span><span class="en block">7-service cross search</span></li><li><span class="ja">並列ワンクリック起動</span><span class="en block">Parallel one-click launch</span></li><li><span class="ja">回答の比較で偏り検出</span><span class="en block">Bias detection via comparison</span></li><li><span class="ja">AI診断コンテンツへ発展</span><span class="en block">Grew into AI diagnostic quiz</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-05"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-05"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      AIごとに得意分野もクセも違う。1つのAIを信じきるのは、1つのメディアだけ見るのと同じ。複数に同時に聞けば、偏りそのものが見えてくる。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-06" style="--tool-color:#EF4444">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">06 · YT Grid</span></div>
+    <h3 class="tool-name">YouTube Grid Manager</h3>
+    <div class="tool-tagline"><span class="ja">再生リストを、探せるライブラリへ。</span><span class="en block">Turn playlists into a searchable library.</span></div>
+    <div class="tool-desc"><span class="ja">YouTubeの再生リストをNetflixライクなグリッドカードに変換。タイトル・チャンネル名での絞り込み検索、タグ管理、CSV出力に対応。Shadow DOMで既存UIを壊さず埋め込む。</span><span class="en block">Converts YouTube playlists into a Netflix-like grid of cards, with real-time filtering by title and channel, tag management, and CSV export. Embeds via Shadow DOM without breaking the native UI.</span></div>
+    
+    <a class="tool-github-link" href="https://github.com/Nozian/YouTube-Grid-Manager" target="_blank" rel="noopener noreferrer" aria-label="YouTube Grid Manager — GitHub"><span class="ja">GitHubで見る</span><span class="en inline">View on GitHub</span><span aria-hidden="true">↗</span></a>
+    <div class="tool-tech"><span>Manifest V3</span><span>Shadow DOM</span><span>MutationObserver</span><span>SPA-aware injection</span></div>
+    <ul class="tool-feats"><li><span class="ja">グリッド表示変換</span><span class="en block">Grid view conversion</span></li><li><span class="ja">タイトル/チャンネル絞り込み</span><span class="en block">Filter by title/channel</span></li><li><span class="ja">タグ管理・CSV出力</span><span class="en block">Tags & CSV export</span></li><li><span class="ja">Shadow DOMで非破壊埋込</span><span class="en block">Non-destructive Shadow DOM</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-06"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-06"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      「あとで見る」に積まれた動画は本棚の積読と同じで、立派な知的資産。グリッドにして検索できれば、アーカイブは使える知識になる。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-07" style="--tool-color:#06B6D4">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">07 · Bias Lens</span></div>
+    <h3 class="tool-name">Media Bias Detector</h3>
+    <div class="tool-tagline"><span class="ja">ニュースを、疑うことから始める。</span><span class="en block">Start by questioning the news.</span></div>
+    <div class="tool-desc"><span class="ja">ニュース記事・SNS投稿にホバーすると、要約・バイアス分析・ファクトチェック・深掘り検索のボタンが出現。ChatGPT・Perplexity・Grokなどへワンクリックで分析を投げられる。</span><span class="en block">Hovering over a news article or social post reveals buttons for summary, bias analysis, fact-check, and deep search, each routing to ChatGPT, Perplexity, Grok and more with one click.</span></div>
+    
+    <a class="tool-github-link" href="https://github.com/Nozian/Media-Bias-Detector" target="_blank" rel="noopener noreferrer" aria-label="Media Bias Detector — GitHub"><span class="ja">GitHubで見る</span><span class="en inline">View on GitHub</span><span aria-hidden="true">↗</span></a>
+    <div class="tool-tech"><span>Manifest V3</span><span>Content Script</span><span>position:fixed overlay</span><span>Multi-AI routing</span></div>
+    <ul class="tool-feats"><li><span class="ja">要約/バイアス分析/ファクトチェック</span><span class="en block">Summary/bias/fact-check</span></li><li><span class="ja">X・ニュース・検索に対応</span><span class="en block">X, news & search support</span></li><li><span class="ja">AI/検索エンジン選択メニュー</span><span class="en block">AI & search engine menu</span></li><li><span class="ja">信頼性を自分で確かめる設計</span><span class="en block">Designed to verify trust yourself</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-07"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-07"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      卒論でSNSのアルゴリズムとフィルターバブルを研究した。情報を疑う姿勢は知識やなくて習慣。その習慣を、毎日触るブラウザの中に埋め込みたかった。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-08" style="--tool-color:#0EA5E9">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">08 · Yodobashi Modern</span></div>
+    <h3 class="tool-name">Yodobashi Modern</h3>
+    <div class="tool-tagline"><span class="ja">ポイント還元を、見える価格にする。</span><span class="en block">Make loyalty points a visible price.</span></div>
+    <div class="tool-desc"><span class="ja">ヨドバシ.comのUIを現代化するChrome拡張。フォント・配色・カードUI・ヘッダーを刷新し、ダークモードにも対応。「実質価格バッジ」で価格からポイント還元を引いた金額を表示する。</span><span class="en block">A Chrome extension that modernizes Yodobashi.com — refreshed fonts, colors, card UI, and header, plus dark mode. Its signature feature is the 'net price badge': price minus loyalty points shown on each product.</span></div>
+    
+    
+    <div class="tool-tech"><span>Manifest V3</span><span>data-attribute styling</span><span>Heuristic DOM detection</span><span>chrome.storage.sync</span></div>
+    <ul class="tool-feats"><li><span class="ja">全体リスタイル</span><span class="en block">Full restyle</span></li><li><span class="ja">ダークモード</span><span class="en block">Dark mode</span></li><li><span class="ja">実質価格バッジ (価格−ポイント)</span><span class="en block">Net-price badge (price − points)</span></li><li><span class="ja">バナー静音モード</span><span class="en block">Banner quiet mode</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-08"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-08"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      Amazonの一強は健全やない。ヨドバシの本当の武器はポイント還元やのに、古いUIがそれを見せられてない。対抗馬には、対抗馬なりのUIが要る。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-09" style="--tool-color:#8B5CF6">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">09 · AI Screen Time</span></div>
+    <h3 class="tool-name">AI Screen Time Tracker</h3>
+    <div class="tool-tagline"><span class="ja">AIに使った時間を、見える化する。</span><span class="en block">See how much time you actually spend on AI.</span></div>
+    <div class="tool-desc"><span class="ja">ChatGPTなどAIサービスを開いている時間を自動計測し、今日・今週・月間の利用時間を可視化するChrome拡張。データはすべてローカル保存で外部に送らない。</span><span class="en block">A Chrome extension that automatically measures time spent on AI services like ChatGPT, visualizing daily, weekly, and monthly usage. All data stays local and is never sent anywhere.</span></div>
+    
+    <a class="tool-github-link" href="https://github.com/Nozian/ai-screen-timer-homescreen" target="_blank" rel="noopener noreferrer" aria-label="AI Screen Time Tracker — GitHub"><span class="ja">GitHubで見る</span><span class="en inline">View on GitHub</span><span aria-hidden="true">↗</span></a>
+    <div class="tool-tech"><span>Manifest V3</span><span>chrome.storage</span><span>Background service worker</span><span>Local-only data</span></div>
+    <ul class="tool-feats"><li><span class="ja">利用時間を自動計測</span><span class="en block">Auto time tracking</span></li><li><span class="ja">今日/今週/月間の表示</span><span class="en block">Daily/weekly/monthly view</span></li><li><span class="ja">完全ローカル保存</span><span class="en block">Fully local storage</span></li><li><span class="ja">AI依存のセルフチェック</span><span class="en block">AI-reliance self-check</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-09"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-09"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      AIは便利すぎて、気づくと使用量が見えなくなる。スマホのスクリーンタイムと同じで、まず可視化せんと付き合い方は設計できへん。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-10" style="--tool-color:#84A529">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">10 · Timeline Viewer</span></div>
+    <h3 class="tool-name">Google Maps Timeline Viewer</h3>
+    <div class="tool-tagline"><span class="ja">消えた移動履歴を、自分の手に戻す。</span><span class="en block">Get your location history back.</span></div>
+    <div class="tool-desc"><span class="ja">自分の判断でうっかり初期化してしまい、Googleマップのタイムラインが消えてしまったことをきっかけに作った、location-history.jsonビューア。日頃からTakeoutで位置履歴を外部に書き出していたおかげでデータ自体は無事だったので、それをドロップするだけで、日別の地図・滞在ランキング・移動統計・ヒートマップ・自動旅行検出までこなせるビューアにした。</span><span class="en block">A location-history.json viewer, built after I accidentally reset my own device and lost my Google Maps Timeline. The data itself survived because I'd been exporting it via Takeout all along — drop that export in and get a daily map, place ranking, movement stats, a heatmap, and automatic trip detection.</span></div>
+    
+    <a class="tool-github-link" href="https://github.com/Nozian/googlemap-timeline-search" target="_blank" rel="noopener noreferrer" aria-label="Google Maps Timeline Viewer — GitHub"><span class="ja">GitHubで見る</span><span class="en inline">View on GitHub</span><span aria-hidden="true">↗</span></a>
+    <div class="tool-tech"><span>HTML/CSS/JS (no build)</span><span>Leaflet.js</span><span>Nominatim geocoding</span><span>IndexedDB</span></div>
+    <ul class="tool-feats"><li><span class="ja">日別マップ & ルート表示</span><span class="en block">Daily map & routes</span></li><li><span class="ja">滞在ランキング・移動統計</span><span class="en block">Place ranking & stats</span></li><li><span class="ja">ヒートマップ・都道府県ビンゴ</span><span class="en block">Heatmap & prefecture bingo</span></li><li><span class="ja">完全ローカル処理</span><span class="en block">Fully local processing</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-10"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-10"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      自分の初期化でタイムラインを消してもうた。けど日頃からTakeoutで外部にバックアップしてたおかげでデータ自体は生きてた。「バックアップは取っといて正解やった」を実感した一本。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-11" style="--tool-color:#F59E0B">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">11 · Browser Navigator</span></div>
+    <h3 class="tool-name">Browser Navigator</h3>
+    <div class="tool-tagline"><span class="ja">自分に合うブラウザを、診断する。</span><span class="en block">Find the browser that actually fits you.</span></div>
+    <div class="tool-desc"><span class="ja">速度・プライバシー・拡張機能・バッテリー・広告ブロックなど12軸の質問に答えると、Chrome・Firefox・Safari・Edge・Braveから最適なブラウザを診断するWebアプリ。重み付けスコアと機能比較テーブルで結果を提示。</span><span class="en block">A web app that recommends the best browser from Chrome, Firefox, Safari, Edge, and Brave based on a 12-axis quiz covering speed, privacy, extensions, battery, and ad-blocking. Presents results with weighted scores and a feature comparison table.</span></div>
+    
+    
+    <div class="tool-tech"><span>Single-file HTML</span><span>Chart.js</span><span>Weighted scoring</span><span>Dark-mode UI</span></div>
+    <ul class="tool-feats"><li><span class="ja">12軸の重み付け診断</span><span class="en block">12-axis weighted quiz</span></li><li><span class="ja">Chart.js棒グラフ表示</span><span class="en block">Chart.js bar graph</span></li><li><span class="ja">機能比較テーブル</span><span class="en block">Feature comparison table</span></li><li><span class="ja">AI Navigatorとシリーズ統一</span><span class="en block">Series-consistent with AI Navigator</span></li></ul>
+    
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-11"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-11"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      ツールは思想で選ぶべきやけど、最初の一歩は「自分に何が合うか」を知ること。診断は、押し付けやなく自分で決めるための補助線。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div>
+<div class="tool open" id="tool-12" style="--tool-color:#2F9E44">
+    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">12 · Library Checker</span></div>
+    <h3 class="tool-name">Library Availability Checker</h3>
+    <div class="tool-tagline"><span class="ja">買う前に、借りられるか一目でわかる。</span><span class="en block">See if the library has it, before you buy.</span></div>
+    <div class="tool-desc"><span class="ja">Amazonのほしい物リスト・カート・商品ページ・検索結果ページで、見ている本が登録した図書館で借りられるかをその場でチェック。カーリルAPIと連携し、登録した図書館ごとに貸出状況を個別表示。図書館だけでなく書店・フリマサイトへのリンクもワンクリックで開ける。</span><span class="en block">Checks whether the book you're viewing on an Amazon wishlist, cart, product page, or search results page is available at your registered libraries — right on the page. Integrates with the Calil API to show availability per library, plus one-click links to bookstores and marketplaces.</span></div>
+    <a class="tool-full-link" href="https://nozian.github.io/library-chacker/" target="_blank" rel="noopener noreferrer"><span class="ja">Web版を開く</span><span class="en inline">Open the web version</span><span class="arrow">→</span></a>
+    <a class="tool-github-link" href="https://github.com/Nozian/amazon-library-finder2" target="_blank" rel="noopener noreferrer" aria-label="Library Availability Checker — GitHub"><span class="ja">GitHubで見る</span><span class="en inline">View on GitHub</span><span aria-hidden="true">↗</span></a>
+    <div class="tool-tech"><span>Manifest V3</span><span>Calil API</span><span>Shadow DOM</span><span>MutationObserver</span></div>
+    <ul class="tool-feats"><li><span class="ja">ほしい物リスト・カート・商品・検索結果に対応</span><span class="en block">Wishlist, cart, product & search pages</span></li><li><span class="ja">図書館・書店・フリマへのワンクリックリンク</span><span class="en block">One-click links to libraries, stores & marketplaces</span></li><li><span class="ja">登録図書館ごとに貸出状況を個別表示</span><span class="en block">Per-library availability breakdown</span></li><li><span class="ja">予約ページへの直リンク</span><span class="en block">Direct links to reservation pages</span></li></ul>
+    
+    <div class="tool-demo" data-demo="1">
+      <label class="demo-label"><span class="ja">試してみる — 本のタイトルを入力</span><span class="en block">Try it — enter a book title</span></label>
+      <form class="demo-row" action="https://www.google.com/search" method="get" target="_blank" rel="noopener noreferrer">
+        <input type="search" name="q" required class="demo-input" aria-label="本のタイトル / Book title" placeholder="例: 世界史 深読み">
+        <input type="hidden" name="as_q" value="本">
+        <button class="demo-btn" type="submit"><span class="ja">Google検索</span><span class="en inline">Google Search</span></button>
+      </form>
+      <div class="demo-links"></div>
+      <p class="demo-note">
+        <span class="ja">Google検索は「入力した言葉＋本」で開きます。下のリンクは、入力した言葉で図書館・書店を検索します。登録図書館ごとの貸出判定にはAPIキー登録とAmazon連携（拡張機能本体）が必要。</span>
+        <span class="en block">Google Search adds 本 (book) to your query. The links below search libraries and bookstores using your input. Per-library availability requires an API key and the actual Amazon extension.</span>
+      </p>
+    </div>
+    <button type="button" class="tool-expand" aria-expanded="true" aria-controls="motive-12"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus" aria-hidden="true">+</span></button>
+    <div class="tool-motive" id="motive-12"><div class="tool-motive-clip"><div class="tool-motive-inner">
+      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
+      Book Search+で本の横断検索はできるようになったけど、「結局どこで借りられるか」は毎回自分で確認してた。複数登録した図書館のうち、どこで借りられるかまでその場でわかるようにした。
+    </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div></div>
   </div>
 </section>
  
@@ -342,10 +410,13 @@ footer {
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="sec-eyebrow"><span class="ja">共通点</span><span class="en inline">The thread</span></div>
-      <h2 id="pat-title"></h2>
+      <h2 id="pat-title"><span class="ja">12本に共通する設計パターン</span><span class="en block">The common pattern across all twelve</span></h2>
       <p><span class="ja">12本はバラバラに見えて、設計思想は一本につながっている。</span><span class="en block">Twelve tools that look scattered, held together by one design philosophy.</span></p>
     </div>
-    <div class="pattern-grid reveal" id="pattern-wrap"></div>
+    <div class="pattern-grid reveal" id="pattern-wrap"><div class="pat-item"><span class="pat-n">01</span><p><span class="ja">既存のページを壊さず、上から重ねる (Content Script / Shadow DOM)</span><span class="en block">Overlay, don't replace (Content Script / Shadow DOM)</span></p></div>
+<div class="pat-item"><span class="pat-n">02</span><p><span class="ja">データは可能な限りローカルに留める (プライバシー優先)</span><span class="en block">Keep data local whenever possible (privacy first)</span></p></div>
+<div class="pat-item"><span class="pat-n">03</span><p><span class="ja">APIキーやログイン不要で、誰でもすぐ使える</span><span class="en block">No API key or login required — usable by anyone instantly</span></p></div>
+<div class="pat-item"><span class="pat-n">04</span><p><span class="ja">横断・比較・可視化で「選ぶ力」を取り戻す</span><span class="en block">Cross-reference, compare, visualize — restore the power to choose</span></p></div></div>
   </div>
 </section>
  
@@ -396,6 +467,7 @@ const TOOLS = [
     tech: ["Manifest V3", "TMDb API", "MutationObserver", "CSV export"],
     color: "E0506E",
     repo: "streaming-watchlist-organizer",
+    github: "https://github.com/Nozian/stream-list-app",
     motiveJa: "サブスクが増えるほど「どこで何を観たかったか」が分散していく。サービス側は横断を助けてくれへんから、自分で横断レイヤーを作った。"
   },
   {
@@ -412,6 +484,7 @@ const TOOLS = [
     tech: ["Manifest V3", "Content Script", "CSS Override", "MutationObserver"],
     color: "F0A500",
     repo: "amazon-wishlist-organizer",
+    github: "https://github.com/Nozian/Amazon-Wishlist-Organizer",
     motiveJa: "ほしい物リストは縦に伸びるだけで、全体を見て「結局どれを買うか」を判断しづらい。一覧性を取り戻せば、買い物メモが意思決定ツールになる。"
   },
   {
@@ -428,6 +501,7 @@ const TOOLS = [
     tech: ["Manifest V3", "Content Script", "localStorage", "Embedded sidebar"],
     color: "34A853",
     repo: "google-cleaner",
+    github: "https://github.com/Nozian/Google-Cleaner",
     motiveJa: "検索は情報への入口やのに、その入口がノイズで埋まっていく。フィルターバブルを研究してきた身として、検索結果を「結果だけ」に戻すのは思想の実装でもある。"
   },
   {
@@ -444,6 +518,7 @@ const TOOLS = [
     tech: ["Manifest V3", "Content Script", "URL query builder", "Multi-site routing"],
     color: "A371F7",
     repo: "amazon-multi-search-helper",
+    github: "https://github.com/Nozian/Amazon-Multi-Search-Helper",
     motiveJa: "本は買う以外にも、借りる・古本で買う・読み比べるという選択肢がある。Amazonを「発見の起点」にすれば、読書の自由度が一気に広がる。"
   },
   {
@@ -460,6 +535,7 @@ const TOOLS = [
     tech: ["Manifest V3", "URL query builder", "Multi-tab launch", "Chart.js (diagnostic)"],
     color: "5B8DEF",
     repo: "ai-search-assistant",
+    github: "https://github.com/Nozian/AI-Search-Assistant",
     motiveJa: "AIごとに得意分野もクセも違う。1つのAIを信じきるのは、1つのメディアだけ見るのと同じ。複数に同時に聞けば、偏りそのものが見えてくる。"
   },
   {
@@ -476,6 +552,7 @@ const TOOLS = [
     tech: ["Manifest V3", "Shadow DOM", "MutationObserver", "SPA-aware injection"],
     color: "EF4444",
     repo: "youtube-grid-manager",
+    github: "https://github.com/Nozian/YouTube-Grid-Manager",
     motiveJa: "「あとで見る」に積まれた動画は本棚の積読と同じで、立派な知的資産。グリッドにして検索できれば、アーカイブは使える知識になる。"
   },
   {
@@ -492,6 +569,7 @@ const TOOLS = [
     tech: ["Manifest V3", "Content Script", "position:fixed overlay", "Multi-AI routing"],
     color: "06B6D4",
     repo: "media-bias-detector",
+    github: "https://github.com/Nozian/Media-Bias-Detector",
     motiveJa: "卒論でSNSのアルゴリズムとフィルターバブルを研究した。情報を疑う姿勢は知識やなくて習慣。その習慣を、毎日触るブラウザの中に埋め込みたかった。"
   },
   {
@@ -524,6 +602,7 @@ const TOOLS = [
     tech: ["Manifest V3", "chrome.storage", "Background service worker", "Local-only data"],
     color: "8B5CF6",
     repo: "ai-screen-time-tracker",
+    github: "https://github.com/Nozian/ai-screen-timer-homescreen",
     motiveJa: "AIは便利すぎて、気づくと使用量が見えなくなる。スマホのスクリーンタイムと同じで、まず可視化せんと付き合い方は設計できへん。"
   },
   {
@@ -540,6 +619,7 @@ const TOOLS = [
     tech: ["HTML/CSS/JS (no build)", "Leaflet.js", "Nominatim geocoding", "IndexedDB"],
     color: "84A529",
     repo: "timeline-viewer",
+    github: "https://github.com/Nozian/googlemap-timeline-search",
     motiveJa: "自分の初期化でタイムラインを消してもうた。けど日頃からTakeoutで外部にバックアップしてたおかげでデータ自体は生きてた。「バックアップは取っといて正解やった」を実感した一本。"
   },
   {
@@ -572,6 +652,7 @@ const TOOLS = [
     tech: ["Manifest V3", "Calil API", "Shadow DOM", "MutationObserver"],
     color: "2F9E44",
     repo: "calil-wishlist-checker",
+    github: "https://github.com/Nozian/amazon-library-finder2",
     demo: true,
     link: "https://nozian.github.io/library-chacker/",
     linkLabelJa: "Web版を開く",
@@ -617,26 +698,17 @@ const PATTERNS = {
 <script>
 function setLang(l) {
   document.body.className = 'lang-' + l;
+  document.documentElement.lang = l;
+  document.getElementById('btn-ja').setAttribute('aria-pressed', l === 'ja');
+  document.getElementById('btn-en').setAttribute('aria-pressed', l === 'en');
   document.getElementById('btn-ja').classList.toggle('on', l === 'ja');
   document.getElementById('btn-en').classList.toggle('on', l === 'en');
 }
  
-// Manifesto
-const mg = document.getElementById('manifesto-grid');
-BRAND.philosophy.forEach((p, i) => {
-  const d = document.createElement('div');
-  d.className = 'mani';
-  d.innerHTML = `<div class="idx">${String(i+1).padStart(2,'0')}</div>
-    <h3><span class="ja">${p.jaTitle}</span><span class="en block">${p.enTitle}</span></h3>
-    <p><span class="ja">${p.jaBody}</span><span class="en block">${p.enBody}</span></p>`;
-  mg.appendChild(d);
-});
- 
-// 図書館デモ用: タイトルからクイックリンクを組み立てる(実際の拡張機能と同じ発想)
 function buildDemoLinks(title) {
   const q = encodeURIComponent(title);
   return [
-    { label: "図書館 (カーリル)", url: `https://calil.jp/openurl?rft.btitle=${q}`, cls: "demo-library" },
+    { label: "図書館 (カーリル)", url: `https://calil.jp/search?q=${q}`, cls: "demo-library" },
     { label: "Amazon", url: `https://www.amazon.co.jp/s?k=${q}` },
     { label: "楽天ブックス", url: `https://search.rakuten.co.jp/search/mall/${q}/` },
     { label: "紀伊國屋", url: `https://www.google.com/search?q=site:kinokuniya.co.jp+${q}` },
@@ -647,97 +719,51 @@ function buildDemoLinks(title) {
   ];
 }
  
-function buildDemoHtml() {
-  return `
-    <div class="tool-demo" data-demo="1">
-      <label class="demo-label"><span class="ja">試してみる — 本のタイトルを入力</span><span class="en block">Try it — enter a book title</span></label>
-      <div class="demo-row">
-        <input type="text" class="demo-input" placeholder="例: 世界史 深読み">
-        <button class="demo-btn" type="button"><span class="ja">検索</span><span class="en inline">Search</span></button>
-      </div>
-      <div class="demo-links"></div>
-      <p class="demo-note">
-        <span class="ja">※ このデモは実際の拡張機能と同じ横断検索リンクを開くだけの簡易版。登録図書館ごとの貸出判定にはAPIキー登録とAmazon連携(拡張機能本体)が必要。</span>
-        <span class="en block">This demo just opens the same cross-search links as the real extension. Per-library availability requires an API key and the actual Amazon extension.</span>
-      </p>
-    </div>`;
-}
- 
-// Tools
-const tl = document.getElementById('tools-list');
-TOOLS.forEach(t => {
-  const feats = t.features.map((f,i)=>`<li><span class="ja">${f}</span><span class="en block">${t.featuresEn[i]}</span></li>`).join('');
-  const tech = t.tech.map(x=>`<span>${x}</span>`).join('');
-  const row = document.createElement('div');
-  row.className = 'tool';
-  row.style.setProperty('--tool-color', '#'+t.color);
-  row.innerHTML = `
-    <div class="tool-top"><span class="tool-dot"></span><span class="tool-num">${t.num} · ${t.short}</span></div>
-    <div class="tool-name">${t.name}</div>
-    <div class="tool-tagline"><span class="ja">${t.taglineJa}</span><span class="en block">${t.taglineEn}</span></div>
-    <div class="tool-desc"><span class="ja">${t.descJa}</span><span class="en block">${t.descEn}</span></div>
-    ${t.link ? `<a class="tool-full-link" href="${t.link}" target="_blank" rel="noopener noreferrer"><span class="ja">${t.linkLabelJa}</span><span class="en inline">${t.linkLabelEn}</span><span class="arrow">→</span></a>` : ''}
-    <div class="tool-tech">${tech}</div>
-    <ul class="tool-feats">${feats}</ul>
-    ${t.demo ? buildDemoHtml() : ''}
-    <div class="tool-motive"><div class="tool-motive-inner">
-      <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
-      ${t.motiveJa}
-    </div></div>
-    <div class="tool-expand"><span class="ja">動機</span><span class="en inline">Why</span> <span class="plus">+</span></div>`;
-  row.addEventListener('click', () => row.classList.toggle('open'));
- 
-  const fullLink = row.querySelector('.tool-full-link');
-  if (fullLink) fullLink.addEventListener('click', (e) => e.stopPropagation());
- 
-  if (t.demo) {
-    const demoEl = row.querySelector('.tool-demo');
+
+// Content is authored in HTML so file previews and readers without JavaScript see every project.
+document.querySelectorAll('.tool').forEach(row => {
+  const expand = row.querySelector('.tool-expand');
+  expand.style.display = 'flex';
+  const motive = row.querySelector('.tool-motive');
+  row.classList.remove('open');
+  expand.setAttribute('aria-expanded', 'false');
+  motive.setAttribute('aria-hidden', 'true');
+  row.addEventListener('click', () => {
+    const open = row.classList.toggle('open');
+    expand.setAttribute('aria-expanded', String(open));
+    motive.setAttribute('aria-hidden', String(!open));
+  });
+  row.querySelectorAll('a').forEach(link => link.addEventListener('click', e => e.stopPropagation()));
+  const demoEl = row.querySelector('.tool-demo');
+  if (demoEl) {
+    demoEl.hidden = false;
     const input = demoEl.querySelector('.demo-input');
-    const btn = demoEl.querySelector('.demo-btn');
+    const form = demoEl.querySelector('form');
+    const query = form.querySelector('input[type="hidden"]');
+    query.name = 'q';
+    input.removeAttribute('name');
+    form.addEventListener('submit', e => {
+      const title = input.value.trim();
+      if (!title) { e.preventDefault(); input.focus(); return; }
+      query.value = title + ' 本';
+    });
     const linksBox = demoEl.querySelector('.demo-links');
- 
-    // デモ操作中はカードの開閉トグルが暴発せんように、ここだけ伝播を止める
-    demoEl.addEventListener('click', (e) => e.stopPropagation());
- 
+    demoEl.addEventListener('click', e => e.stopPropagation());
     const runDemo = () => {
       const title = input.value.trim();
       if (!title) { input.focus(); return; }
       linksBox.innerHTML = '';
-      buildDemoLinks(title).forEach((l) => {
+      buildDemoLinks(title).forEach(l => {
         const a = document.createElement('a');
-        a.href = l.url;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
+        a.href = l.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
         a.className = 'demo-link' + (l.cls ? ' ' + l.cls : '');
-        a.textContent = l.label;
-        linksBox.appendChild(a);
+        a.textContent = l.label; linksBox.appendChild(a);
       });
     };
- 
-    btn.addEventListener('click', runDemo);
-    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') runDemo(); });
+    input.addEventListener('input', runDemo);
+    form.addEventListener('submit', runDemo);
   }
- 
-  tl.appendChild(row);
 });
- 
-// Pattern
-document.getElementById('pat-title').innerHTML =
-  `<span class="ja">${PATTERNS.jaTitle}</span><span class="en block">${PATTERNS.enTitle}</span>`;
-const pw = document.getElementById('pattern-wrap');
-PATTERNS.items.forEach((it,i)=>{
-  const d = document.createElement('div');
-  d.className = 'pat-item';
-  d.innerHTML = `<span class="pat-n">0${i+1}</span><p><span class="ja">${it.ja}</span><span class="en block">${it.en}</span></p>`;
-  pw.appendChild(d);
-});
- 
-// Reveal on scroll
-const io = new IntersectionObserver((es)=>{
-  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
- 
 // TOC scrollspy
 const tocLinks = document.querySelectorAll('.toc-link');
 const tocSections = ['manifesto','tools','pattern','stats']
