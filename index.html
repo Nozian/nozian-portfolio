@@ -157,6 +157,7 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
     <a class="toc-link" href="#contents"><span class="ja">目次</span><span class="en inline">Contents</span></a>
     <a class="toc-link" href="#manifesto"><span class="ja">姿勢</span><span class="en inline">Stance</span></a>
     <a class="toc-link" href="#tools"><span class="ja">作ったもの</span><span class="en inline">Work</span></a>
+    <a class="toc-link" href="#product-thinking"><span class="ja">プロダクト視点</span><span class="en inline">Product</span></a>
     <a class="toc-link" href="#pattern"><span class="ja">共通点</span><span class="en inline">Thread</span></a>
     <a class="toc-link" href="#stats"><span class="ja">記録</span><span class="en inline">Numbers</span></a>
   </div>
@@ -204,6 +205,7 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
 <li><a href="#tool-11"><span class="contents-num">11</span>Browser Navigator</a></li>
 <li><a href="#tool-12"><span class="contents-num">12</span>Library Availability Checker<span class="ja"> — このサイトで検索を試せます</span><span class="en inline"> — Try book search on this site</span></a></li></ul>
         </li>
+        <li><a href="#product-thinking"><span class="ja">プロダクト視点 — 12本は、12回の仮説検証</span><span class="en inline">Product thinking — Twelve tools, twelve product hypotheses</span></a></li>
         <li><a href="#pattern"><span class="ja">共通点 — 12本に共通する設計パターン</span><span class="en inline">The thread — The common design pattern</span></a></li>
         <li><a href="#stats"><span class="ja">記録 — 数字で見るNozian</span><span class="en inline">By the numbers — Nozian, counted</span></a></li>
         <li><a href="#closing"><span class="ja">おわりに</span><span class="en inline">Closing</span></a></li>
@@ -425,6 +427,36 @@ footer { padding:28px; font-size:12px; text-align:center; color:var(--sub); }
       <span class="label"><span class="ja">なぜ作ったか</span><span class="en inline">Why I built it</span></span>
       Book Search+で本の横断検索はできるようになったけど、「結局どこで借りられるか」は毎回自分で確認してた。複数登録した図書館のうち、どこで借りられるかまでその場でわかるようにした。
     </div></div></div><a class="back-contents" href="#contents"><span class="ja">目次に戻る</span><span class="en inline">Back to contents</span></a></div></div>
+  </div>
+</section>
+ 
+<section id="product-thinking" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="ja">プロダクト視点</span><span class="en inline">Product thinking</span></div>
+      <h2><span class="ja">12本は、12回のプロダクト仮説。</span><span class="en block">Twelve tools, twelve product hypotheses.</span></h2>
+      <p>
+        <span class="ja">ひとつの万能アプリを作るのではなく、ひとつの不便にひとつの道具を当てる。既存サービスを使い込み、摩擦を見つけ、仕様に落とし、実装し、自分で使って直し、公開する。12本それぞれが独立した小さな製品であり、同時に「何が本当に役に立つか」を確かめる実験でもある。</span>
+        <span class="en block">Rather than building one universal app, I match one focused tool to one concrete frustration. I use existing services deeply, identify friction, turn it into a specification, build it, test it on myself, iterate, and ship. Each of the twelve tools stands on its own as a small product — and as an experiment in discovering what is genuinely useful.</span>
+      </p>
+    </div>
+    <div class="manifesto-grid reveal">
+      <div class="mani">
+        <div class="idx">01</div>
+        <h3><span class="ja">問題を、使い手の側から見つける</span><span class="en block">Find the problem from the user's side</span></h3>
+        <p><span class="ja">出発点は「作れそうな機能」ではなく、Amazon、YouTube、Prime Video、Googleなどを実際に使う中で感じた具体的な不便。既存UIの摩擦を、改善できる課題として切り出す。</span><span class="en block">The starting point is never “a feature I could build,” but a concrete frustration found while actually using services such as Amazon, YouTube, Prime Video, and Google. I isolate friction in existing interfaces as a solvable design problem.</span></p>
+      </div>
+      <div class="mani">
+        <div class="idx">02</div>
+        <h3><span class="ja">不便を、操作できる仕様に変える</span><span class="en block">Turn friction into an actionable specification</span></h3>
+        <p><span class="ja">「見づらい」「探せない」で終わらせず、検索、絞り込み、比較、可視化、ローカル保存といった具体的な操作へ分解する。問題発見からUI・実装までをひとりでつなぐ。</span><span class="en block">I do not stop at “hard to read” or “hard to find.” I translate those complaints into concrete interactions: search, filtering, comparison, visualization, and local storage — connecting problem discovery, UI design, and implementation end to end.</span></p>
+      </div>
+      <div class="mani">
+        <div class="idx">03</div>
+        <h3><span class="ja">作って終わりではなく、使って確かめる</span><span class="en block">Build, use, verify, then iterate</span></h3>
+        <p><span class="ja">自分自身が最初のヘビーユーザー。日常の中で使い、足りない部分を直し、公開する。反応の強い道具はさらに育てられる。小さく作って確かめることを、12回繰り返してきた。</span><span class="en block">I am the first heavy user of every tool. I use each one in daily life, fix what falls short, and publish it. The tools that resonate most can be developed further. I have repeated this build-and-verify loop twelve times.</span></p>
+      </div>
+    </div>
   </div>
 </section>
  
@@ -794,7 +826,7 @@ document.querySelectorAll('a[href="#contents"]').forEach(link => {
 
 // TOC scrollspy
 const tocLinks = document.querySelectorAll('.toc-link');
-const tocSections = ['manifesto','tools','pattern','stats']
+const tocSections = ['manifesto','tools','product-thinking','pattern','stats']
   .map(id => document.getElementById(id))
   .filter(Boolean);
 const tocObserver = new IntersectionObserver((entries) => {
